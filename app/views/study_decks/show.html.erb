@@ -1,0 +1,19 @@
+<h1><%= @study_deck.name %></h1>
+
+<p><%= @study_deck.description %></p>
+
+<h2>Study Cards</h2>
+
+<ul>
+  <% @study_deck.study_cards.each do |card| %>
+    <li>
+    <%= link_to card.title, study_card_path(card) %>
+    <br>
+    <%= card.description %>
+    </li>
+  <% end %>
+</ul>
+
+<p>
+  <%= link_to "← Back to Decks", root_path %>
+</p>

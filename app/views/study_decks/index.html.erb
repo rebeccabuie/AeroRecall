@@ -1,0 +1,11 @@
+<h1>AeroRecall</h1>
+
+<p>Select a study deck:</p>
+
+<ul>
+  <% @study_decks.each do |deck| %>
+    <li>
+      <%= link_to deck.name, study_deck_path(deck) %>
+    </li>
+  <% end %>
+</ul>

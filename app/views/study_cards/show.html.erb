@@ -1,0 +1,28 @@
+<h1><%= @study_card.title %></h1>
+
+<p><%= @study_card.description %></p>
+
+<% if @study_card.infographic.attached? %>
+  <%= image_tag @study_card.infographic, style: "max-width: 100%; height: auto;" %>
+<% end %>
+
+<h2>Questions</h2>
+
+<ol>
+  <% @study_card.questions.order(:position).each do |question| %>
+    <li>
+      <strong><%= question.question_text %></strong>
+
+      <ul>
+        <li>A. <%= question.option_a %></li>
+        <li>B. <%= question.option_b %></li>
+        <li>C. <%= question.option_c %></li>
+        <li>D. <%= question.option_d %></li>
+      </ul>
+    </li>
+  <% end %>
+</ol>
+
+<p>
+  <%= link_to "← Back to #{@study_card.study_deck.name}", study_deck_path(@study_card.study_deck) %>
+</p>
