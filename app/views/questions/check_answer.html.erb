@@ -1,0 +1,15 @@
+<h1>Answer Result</h1>
+
+<% if @correct %>
+  <p>Correct! ✅</p>
+<% else %>
+  <p>Not quite. The correct answer is <%= @question.correct_option %>.</p>
+<% end %>
+
+<p>
+  <%= @question.explanation %>
+</p>
+
+<p>
+  <%= link_to "← Back to #{@question.study_card.title}", study_card_path(@question.study_card) %>
+</p>

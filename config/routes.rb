@@ -3,4 +3,8 @@ Rails.application.routes.draw do
 
   resources :study_decks, only: [:index, :show]
   resources :study_cards, only: [:show]
+
+  resources :questions, only: [] do
+    post :check_answer, on: :member
+  end
 end
