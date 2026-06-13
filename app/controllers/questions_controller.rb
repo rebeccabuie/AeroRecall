@@ -5,6 +5,9 @@ class QuestionsController < ApplicationController
     @selected_answer = params[:answer]
     @correct = @selected_answer == @question.correct_option
 
-    render :check_answer
+    respond_to do |format|
+      format.turbo_stream
+      format.html { render :check_answer }
+    end
   end
 end

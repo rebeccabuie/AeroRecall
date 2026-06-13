@@ -1,0 +1,9 @@
+<%= turbo_stream.update "question_#{@question.id}_result" do %>
+  <% if @correct %>
+    <p>Correct! ✅</p>
+  <% else %>
+    <p>Not quite. The correct answer is <%= @question.correct_option %>.</p>
+  <% end %>
+
+  <p><%= @question.explanation %></p>
+<% end %>

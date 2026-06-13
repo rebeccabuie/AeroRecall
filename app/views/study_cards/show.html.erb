@@ -12,8 +12,7 @@
   <% @study_card.questions.order(:position).each do |question| %>
         <li>
             <strong><%= question.question_text %></strong>
-            <%= form_with url: check_answer_question_path(question), method: :post, data: { turbo: false } do %>
-            <p>
+            <%= form_with url: check_answer_question_path(question), method: :post do %>            <p>
                 <%= radio_button_tag :answer, "A" %>
                 <%= question.option_a %>
             </p>
@@ -30,6 +29,7 @@
                 <%= question.option_d %>
             </p>
             <%= submit_tag "Check Answer" %>
+                <div id="question_<%= question.id %>_result"></div>
             <% end %>
         </li>
     <% end %>
