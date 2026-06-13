@@ -1,19 +1,38 @@
-<h1><%= @study_deck.name %></h1>
+<section class="study-card-page">
+  <%= link_to "← Back to Decks", root_path, class: "back-link" %>
 
-<p><%= @study_deck.description %></p>
+  <header class="study-card-header">
+    <p class="eyebrow">Study Deck</p>
 
-<h2>Study Cards</h2>
+    <div class="title-row">
+      <h1><%= @study_deck.name %></h1>
 
-<ul>
-  <% @study_deck.study_cards.each do |card| %>
-    <li>
-    <%= link_to card.title, study_card_path(card) %>
-    <br>
-    <%= card.description %>
-    </li>
-  <% end %>
-</ul>
+      <p class="card-progress">
+        <%= @study_deck.study_cards.count %> Cards
+      </p>
+    </div>
 
-<p>
-  <%= link_to "← Back to Decks", root_path %>
-</p>
+    <p><%= @study_deck.description %></p>
+  </header>
+
+  <section class="deck-grid">
+    <% @study_deck.study_cards.order(:position).each do |card| %>
+      <%= link_to study_card_path(card), class: "deck-card" do %>
+        
+        <% if card.infographic.attached? %>
+          <%= image_tag card.infographic, class: "card-thumbnail" %>
+        <% end %>
+
+        <div class="deck-card-content">
+          <p class="eyebrow">Card <%= card.position %></p>
+
+          <h2><%= card.title %></h2>
+
+          <p><%= card.description %></p>
+
+          <span>Start lesson →</span>
+        </div>
+      <% end %>
+    <% end %>
+  </section>
+</section>

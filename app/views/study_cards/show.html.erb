@@ -3,7 +3,14 @@
 
   <header class="study-card-header">
     <p class="eyebrow"><%= @study_card.study_deck.name %> Deck</p>
-    <h1><%= @study_card.title %></h1>
+
+    <div class="title-row">
+      <h1><%= @study_card.title %></h1>
+      <p class="card-progress">
+        Card <%= @card_number %> of <%= @total_cards %>
+      </p>
+    </div>
+
     <p><%= @study_card.description %></p>
   </header>
 
