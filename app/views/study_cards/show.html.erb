@@ -1,62 +1,72 @@
-<h1><%= @study_card.title %></h1>
+<section class="study-card-page">
+  <%= link_to "← Back to #{@study_card.study_deck.name}", study_deck_path(@study_card.study_deck), class: "back-link" %>
 
-<p><%= @study_card.description %></p>
+  <header class="study-card-header">
+    <p class="eyebrow"><%= @study_card.study_deck.name %> Deck</p>
+    <h1><%= @study_card.title %></h1>
+    <p><%= @study_card.description %></p>
+  </header>
 
-<% if @study_card.infographic.attached? %>
-  <%= image_tag @study_card.infographic, style: "max-width: 100%; height: auto;" %>
-<% end %>
+  <% if @study_card.infographic.attached? %>
+    <div class="infographic-frame">
+      <%= image_tag @study_card.infographic, class: "infographic-image" %>
+    </div>
+  <% end %>
 
-<h2>Questions</h2>
+  <section class="quiz-panel">
+    <div class="quiz-header">
+      <div>
+        <p class="eyebrow">Quiz</p>
+        <h2>Questions</h2>
+      </div>
 
-<p id="score">
-  Score: 0 / <%= @study_card.questions.count %>
-</p>
+      <div id="score" class="score-card">
+        Score: 0 / <%= @study_card.questions.count %>
+      </div>
+    </div>
 
-<p id="completion_message"></p>
+    <p id="completion_message" class="completion-message"></p>
 
-<input type="hidden" id="current_score" value="0">
-<input type="hidden" id="total_questions" value="<%= @study_card.questions.count %>">
+    <input type="hidden" id="current_score" value="0">
+    <input type="hidden" id="total_questions" value="<%= @study_card.questions.count %>">
 
-<% if @next_card %>
-  <input type="hidden" id="next_card_url" value="<%= study_card_path(@next_card) %>">
-  <input type="hidden" id="next_card_title" value="<%= @next_card.title %>">
-<% end %>
-
-    <ol>
-    <% @study_card.questions.order(:position).each do |question| %>
-        <li>
-        <strong><%= question.question_text %></strong>
-
-        <%= form_with url: check_answer_question_path(question), method: :post, id: "question_#{question.id}_form", data: { correct_answer: question.correct_option } do %>
-            <p>
-            <%= radio_button_tag :answer, "A" %>
-            <%= question.option_a %>
-            </p>
-
-            <p>
-            <%= radio_button_tag :answer, "B" %>
-            <%= question.option_b %>
-            </p>
-
-            <p>
-            <%= radio_button_tag :answer, "C" %>
-            <%= question.option_c %>
-            </p>
-
-            <p>
-            <%= radio_button_tag :answer, "D" %>
-            <%= question.option_d %>
-            </p>
-
-            <%= submit_tag "Check Answer" %>
-        <% end %>
-
-        <div id="question_<%= question.id %>_result"></div>
-        </li>
+    <% if @next_card %>
+      <input type="hidden" id="next_card_url" value="<%= study_card_path(@next_card) %>">
+      <input type="hidden" id="next_card_title" value="<%= @next_card.title %>">
     <% end %>
-    </ol>
 
-    <p>
-    <%= link_to "← Back to #{@study_card.study_deck.name}", study_deck_path(@study_card.study_deck) %>
-    </p>
-    
+    <ol class="question-list">
+      <% @study_card.questions.order(:position).each do |question| %>
+        <li class="question-card">
+          <h3><%= question.question_text %></h3>
+
+          <%= form_with url: check_answer_question_path(question), method: :post, id: "question_#{question.id}_form", data: { correct_answer: question.correct_option }, class: "answer-form" do %>
+            <label>
+              <%= radio_button_tag :answer, "A" %>
+              <span><%= question.option_a %></span>
+            </label>
+
+            <label>
+              <%= radio_button_tag :answer, "B" %>
+              <span><%= question.option_b %></span>
+            </label>
+
+            <label>
+              <%= radio_button_tag :answer, "C" %>
+              <span><%= question.option_c %></span>
+            </label>
+
+            <label>
+              <%= radio_button_tag :answer, "D" %>
+              <span><%= question.option_d %></span>
+            </label>
+
+            <%= submit_tag "Check Answer", class: "button" %>
+          <% end %>
+
+          <div id="question_<%= question.id %>_result" class="answer-result"></div>
+        </li>
+      <% end %>
+    </ol>
+  </section>
+</section>

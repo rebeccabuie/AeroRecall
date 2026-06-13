@@ -1,11 +1,16 @@
-<h1>AeroRecall</h1>
+<section class="page-hero">
+  <p class="eyebrow">Private Pilot Study App</p>
+  <h1>AeroRecall</h1>
+  <p>Study aviation topics with visual boards, quick quizzes, and instant feedback.</p>
+</section>
 
-<p>Select a study deck:</p>
-
-<ul>
+<section class="deck-grid">
   <% @study_decks.each do |deck| %>
-    <li>
-      <%= link_to deck.name, study_deck_path(deck) %>
-    </li>
+    <%= link_to study_deck_path(deck), class: "deck-card" do %>
+      <p class="eyebrow">Study Deck</p>
+      <h2><%= deck.name %></h2>
+      <p><%= deck.description %></p>
+      <span>Start studying →</span>
+    <% end %>
   <% end %>
-</ul>
+</section>

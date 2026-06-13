@@ -8,3 +8,172 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+ body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #1f2937;
+}
+
+.page-hero {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 2rem;
+}
+
+.page-hero h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.page-hero p {
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.deck-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 4rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.deck-card {
+  display: block;
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: white;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.deck-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+}
+
+.deck-card p {
+  color: #4b5563;
+}
+
+.deck-card span {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.study-card-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.study-card-header {
+  margin-bottom: 2rem;
+}
+
+.study-card-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.study-card-header p:last-child {
+  color: #4b5563;
+}
+
+.infographic-frame {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.infographic-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.quiz-panel {
+  background: white;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score-card {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: #eff6ff;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.question-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.question-card {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.question-card h3 {
+  margin-top: 0;
+}
+
+.answer-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.answer-form label {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.button {
+  margin-top: 0.75rem;
+  width: fit-content;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.completion-message {
+  margin-top: 1rem;
+  font-weight: 700;
+}
