@@ -8,32 +8,48 @@
 
 <h2>Questions</h2>
 
-<ol>
-  <% @study_card.questions.order(:position).each do |question| %>
+<p id="score">
+  Score: 0 / <%= @study_card.questions.count %>
+</p>
+
+<p id="completion_message"></p>
+
+<input type="hidden" id="current_score" value="0">
+<input type="hidden" id="total_questions" value="<%= @study_card.questions.count %>">
+
+    <ol>
+    <% @study_card.questions.order(:position).each do |question| %>
         <li>
-            <strong><%= question.question_text %></strong>
-            <%= form_with url: check_answer_question_path(question), method: :post do %>            <p>
-                <%= radio_button_tag :answer, "A" %>
-                <%= question.option_a %>
-            </p>
+        <strong><%= question.question_text %></strong>
+
+        <%= form_with url: check_answer_question_path(question), method: :post, id: "question_#{question.id}_form", data: { correct_answer: question.correct_option } do %>
             <p>
-                <%= radio_button_tag :answer, "B" %>
-                <%= question.option_b %>
+            <%= radio_button_tag :answer, "A" %>
+            <%= question.option_a %>
             </p>
+
             <p>
-                <%= radio_button_tag :answer, "C" %>
-                <%= question.option_c %>
+            <%= radio_button_tag :answer, "B" %>
+            <%= question.option_b %>
             </p>
+
             <p>
-                <%= radio_button_tag :answer, "D" %>
-                <%= question.option_d %>
+            <%= radio_button_tag :answer, "C" %>
+            <%= question.option_c %>
             </p>
+
+            <p>
+            <%= radio_button_tag :answer, "D" %>
+            <%= question.option_d %>
+            </p>
+
             <%= submit_tag "Check Answer" %>
-                <div id="question_<%= question.id %>_result"></div>
-            <% end %>
+        <% end %>
+
+        <div id="question_<%= question.id %>_result"></div>
         </li>
     <% end %>
-</ol>
+    </ol>
 
     <p>
     <%= link_to "← Back to #{@study_card.study_deck.name}", study_deck_path(@study_card.study_deck) %>

@@ -2,8 +2,45 @@
   <% if @correct %>
     <p>Correct! ✅</p>
   <% else %>
-    <p>Not quite. The correct answer is <%= @question.correct_option %>.</p>
+    <p>Not quite.</p>
   <% end %>
+
+  <p>
+    Correct answer:
+    <strong>
+      <%= @question.correct_option %>.
+      <%= @question.public_send("option_#{@question.correct_option.downcase}") %>
+    </strong>
+  </p>
 
   <p><%= @question.explanation %></p>
 <% end %>
+
+<% if @correct %>
+  <%= turbo_stream.append "score" do %>
+    <script>
+      var currentScore = document.getElementById("current_score");
+      var totalQuestions = document.getElementById("total_questions");
+      var scoreDisplay = document.getElementById("score");
+
+      currentScore.value = parseInt(currentScore.value) + 1;
+      var percentage = Math.round((currentScore.value / totalQuestions.value) * 100);
+
+      scoreDisplay.innerText =
+        "Score: " +
+        currentScore.value +
+        " / " +
+        totalQuestions.value +
+        " (" +
+        percentage +
+        "%)";
+
+      if (document.querySelectorAll('form[id$="_form"]').length === 1) {
+        document.getElementById("completion_message").innerHTML =
+          "🎉 Deck Complete!";
+      }
+    </script>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.remove "question_#{@question.id}_form" %>
