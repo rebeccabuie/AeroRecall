@@ -5,6 +5,3 @@ end
 load Rails.root.join("db/seeds/weather/stability.rb")
 load Rails.root.join("db/seeds/weather/icing.rb")
 load Rails.root.join("db/seeds/weather/wind_shear_and_fog.rb")
-
-
-
