@@ -17,6 +17,11 @@
 <input type="hidden" id="current_score" value="0">
 <input type="hidden" id="total_questions" value="<%= @study_card.questions.count %>">
 
+<% if @next_card %>
+  <input type="hidden" id="next_card_url" value="<%= study_card_path(@next_card) %>">
+  <input type="hidden" id="next_card_title" value="<%= @next_card.title %>">
+<% end %>
+
     <ol>
     <% @study_card.questions.order(:position).each do |question| %>
         <li>

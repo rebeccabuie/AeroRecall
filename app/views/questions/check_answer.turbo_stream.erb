@@ -36,8 +36,20 @@
         "%)";
 
       if (document.querySelectorAll('form[id$="_form"]').length === 1) {
-        document.getElementById("completion_message").innerHTML =
-          "🎉 Deck Complete!";
+        var nextCardUrl = document.getElementById("next_card_url");
+        var nextCardTitle = document.getElementById("next_card_title");
+
+        if (nextCardUrl && nextCardTitle) {
+          document.getElementById("completion_message").innerHTML =
+            "🎉 Deck Complete!<br><a href='" +
+            nextCardUrl.value +
+            "'>Next Card: " +
+            nextCardTitle.value +
+            " →</a>";
+        } else {
+          document.getElementById("completion_message").innerHTML =
+            "🎉 Deck Complete!";
+        }
       }
     </script>
   <% end %>
