@@ -9,6 +9,22 @@
       <%= link_to study_deck_path(deck), class: "deck-card" do %>      <p class="eyebrow">Study Deck</p>
       <h2><%= deck.name %></h2>
       <p><%= deck.description %></p>
+
+      <% if authenticated? %>
+        <% progress = @deck_progress[deck.id] %>
+
+        <p>
+          <strong>
+            <%= progress[:completed_cards] %> / <%= progress[:total_cards] %>
+            Cards Completed
+          </strong>
+        </p>
+
+        <p>
+          <%= progress[:percentage] %>% Complete
+        </p>
+      <% end %>
+
       <span>Start studying →</span>
     <% end %>
   <% end %>

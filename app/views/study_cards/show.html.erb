@@ -12,6 +12,12 @@
     </div>
 
     <p><%= @study_card.description %></p>
+
+    <% if authenticated? && @study_card_progress&.completed? %>
+      <div class="completion-badge">
+        ✅ Completed
+      </div>
+    <% end %>
   </header>
 
   <% if @study_card.infographic.attached? %>
@@ -28,13 +34,20 @@
       </div>
 
       <div id="score" class="score-card">
-        Score: 0 / <%= @study_card.questions.count %>
+        <% if authenticated? && @study_card_progress %>
+          Score: <%= @study_card_progress.correct_answers %> / <%= @study_card.questions.count %><br>
+          Answered: <%= @study_card_progress.questions_answered %> / <%= @study_card.questions.count %>
+        <% else %>
+          Score: 0 / <%= @study_card.questions.count %><br>
+          Answered: 0 / <%= @study_card.questions.count %>
+        <% end %>
       </div>
     </div>
 
     <p id="completion_message" class="completion-message"></p>
 
-    <input type="hidden" id="current_score" value="0">
+    <input type="hidden" id="current_score" value="<%= authenticated? && @study_card_progress ? @study_card_progress.correct_answers : 0 %>">
+
     <input type="hidden" id="total_questions" value="<%= @study_card.questions.count %>">
 
     <% if @next_card %>
@@ -44,35 +57,55 @@
 
     <ol class="question-list">
       <% @study_card.questions.order(:position).each do |question| %>
+        <% attempt = @question_attempts&.[](question.id) %>
+
         <li class="question-card">
           <h3><%= question.question_text %></h3>
 
           <%= form_with url: check_answer_question_path(question), method: :post, id: "question_#{question.id}_form", data: { correct_answer: question.correct_option }, class: "answer-form" do %>
             <label>
-              <%= radio_button_tag :answer, "A" %>
+              <%= radio_button_tag :answer, "A", attempt&.selected_answer == "A", disabled: attempt.present? %>
               <span><%= question.option_a %></span>
             </label>
 
             <label>
-              <%= radio_button_tag :answer, "B" %>
+              <%= radio_button_tag :answer, "B", attempt&.selected_answer == "B", disabled: attempt.present? %>
               <span><%= question.option_b %></span>
             </label>
 
             <label>
-              <%= radio_button_tag :answer, "C" %>
+              <%= radio_button_tag :answer, "C", attempt&.selected_answer == "C", disabled: attempt.present? %>
               <span><%= question.option_c %></span>
             </label>
 
             <label>
-              <%= radio_button_tag :answer, "D" %>
+              <%= radio_button_tag :answer, "D", attempt&.selected_answer == "D", disabled: attempt.present? %>
               <span><%= question.option_d %></span>
             </label>
 
-            <%= submit_tag "Check Answer", class: "button" %>
+            <%= submit_tag "Check Answer", class: "button", disabled: attempt.present? %>
           <% end %>
 
-          <div id="question_<%= question.id %>_result" class="answer-result"></div>
-        </li>
+        <div id="question_<%= question.id %>_result" class="answer-result">
+          <% if attempt.present? %>
+            <% if attempt.correct? %>
+              <p>Correct! ✅</p>
+            <% else %>
+              <p>Not quite.</p>
+            <% end %>
+
+            <p>
+              Correct answer:
+              <strong>
+                <%= question.correct_option %>.
+                <%= question.public_send("option_#{question.correct_option.downcase}") %>
+              </strong>
+            </p>
+
+            <p><%= question.explanation %></p>
+          <% end %>
+        </div>   
+      </li>
       <% end %>
     </ol>
   </section>

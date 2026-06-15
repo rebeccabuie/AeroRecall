@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_29_232448) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_15_205329) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -39,6 +39,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_29_232448) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "question_attempts", force: :cascade do |t|
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.integer "question_id", null: false
+    t.string "selected_answer"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["question_id"], name: "index_question_attempts_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_question_attempts_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_question_attempts_on_user_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "correct_option"
     t.datetime "created_at", null: false
@@ -52,6 +64,30 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_29_232448) do
     t.integer "study_card_id", null: false
     t.datetime "updated_at", null: false
     t.index ["study_card_id"], name: "index_questions_on_study_card_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "ip_address"
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "study_card_progresses", force: :cascade do |t|
+    t.boolean "completed", default: false
+    t.datetime "completed_at"
+    t.integer "correct_answers", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "last_studied_at"
+    t.integer "questions_answered", default: 0
+    t.integer "study_card_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["study_card_id"], name: "index_study_card_progresses_on_study_card_id"
+    t.index ["user_id", "study_card_id"], name: "index_study_card_progresses_on_user_id_and_study_card_id", unique: true
+    t.index ["user_id"], name: "index_study_card_progresses_on_user_id"
   end
 
   create_table "study_cards", force: :cascade do |t|
@@ -72,8 +108,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_29_232448) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "question_attempts", "questions"
+  add_foreign_key "question_attempts", "users"
   add_foreign_key "questions", "study_cards"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "study_card_progresses", "study_cards"
+  add_foreign_key "study_card_progresses", "users"
   add_foreign_key "study_cards", "study_decks"
 end

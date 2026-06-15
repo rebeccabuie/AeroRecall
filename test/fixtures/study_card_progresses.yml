@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  study_card: one
+  questions_answered: 1
+  correct_answers: 1
+  completed: false
+  completed_at: 2026-06-15 14:18:37
+  last_studied_at: 2026-06-15 14:18:37
+
+two:
+  user: two
+  study_card: two
+  questions_answered: 1
+  correct_answers: 1
+  completed: false
+  completed_at: 2026-06-15 14:18:37
+  last_studied_at: 2026-06-15 14:18:37
