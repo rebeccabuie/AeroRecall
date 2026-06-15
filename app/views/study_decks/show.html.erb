@@ -1,38 +1,27 @@
 <section class="study-card-page">
-  <%= link_to "← Back to Decks", root_path, class: "back-link" %>
-
   <header class="study-card-header">
-    <p class="eyebrow">Study Deck</p>
-
     <div class="title-row">
       <h1><%= @study_deck.name %></h1>
-
       <p class="card-progress">
         <%= @study_deck.study_cards.count %> Cards
       </p>
     </div>
-
     <p><%= @study_deck.description %></p>
   </header>
-
   <section class="deck-grid">
     <% @study_deck.study_cards.order(:position).each do |card| %>
-      <%= link_to study_card_path(card), class: "deck-card" do %>
-        
+      <%= link_to study_card_path(card), class: "lesson-card" do %>
         <% if card.infographic.attached? %>
           <%= image_tag card.infographic, class: "card-thumbnail" %>
         <% end %>
-
         <div class="deck-card-content">
           <p class="eyebrow">Card <%= card.position %></p>
-
           <h2><%= card.title %></h2>
-
           <p><%= card.description %></p>
-
           <span>Start lesson →</span>
         </div>
       <% end %>
     <% end %>
   </section>
+  <%= link_to "← Back to Decks", root_path, class: "back-link" %>
 </section>

@@ -6,8 +6,7 @@
 
 <section class="deck-grid">
   <% @study_decks.each do |deck| %>
-    <%= link_to study_deck_path(deck), class: "deck-card" do %>
-      <p class="eyebrow">Study Deck</p>
+      <%= link_to study_deck_path(deck), class: "deck-card" do %>      <p class="eyebrow">Study Deck</p>
       <h2><%= deck.name %></h2>
       <p><%= deck.description %></p>
       <span>Start studying →</span>
