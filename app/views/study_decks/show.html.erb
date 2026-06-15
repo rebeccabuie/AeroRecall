@@ -1,32 +1,33 @@
 <section class="study-card-page">
-  <header class="study-card-header">
-    <div class="title-row">
+<header class="deck-hero deck-hero-weather">
+  <div class="deck-hero-left">
+    <%= image_tag "weather-deck-cloud.png", class: "deck-hero-image", alt: "Weather cloud" %>
+
+    <div>
+      <p class="deck-hero-eyebrow">Study Deck</p>
       <h1><%= @study_deck.name %></h1>
-      <p class="card-progress">
-        <%= @study_deck.study_cards.count %> Cards
-      </p>
+      <p><%= @study_deck.description %></p>
     </div>
-    <p><%= @study_deck.description %></p>
+  </div>
 
-    <% if authenticated? %>
-      <% continue_card =
-          @study_deck.first_incomplete_card_for(Current.user) ||
-          @study_deck.study_cards.order(:position).first %>
-
-      <%= link_to "Continue Studying →",
-                  study_card_path(continue_card),
-                  class: "button" %>
-
+  <% if authenticated? %>
+    <div class="deck-hero-actions">
       <% completed_cards = @study_card_progresses.values.count(&:completed?) %>
       <% total_cards = @study_deck.study_cards.count %>
       <% remaining_cards = total_cards - completed_cards %>
 
-      <p class="deck-progress-summary">
-        <%= remaining_cards %> / <%= total_cards %> Cards Remaining
-      </p>
-    <% end %>
+      <p><%= remaining_cards %>/<%= total_cards %> Cards Remaining</p>
 
-  </header>
+      <% continue_card =
+           @study_deck.first_incomplete_card_for(Current.user) ||
+           @study_deck.study_cards.order(:position).first %>
+
+      <%= link_to "Continue Studying ✈️",
+                  study_card_path(continue_card),
+                  class: "deck-hero-link" %>
+    </div>
+  <% end %>
+</header>
 
   <section class="deck-grid">
     <% @study_deck.study_cards.order(:position).each do |card| %>

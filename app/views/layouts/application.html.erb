@@ -24,16 +24,27 @@
   </head>
 
   <body>
-    <nav>
-      <%= link_to "AeroRecall", root_path %>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <%= link_to root_path, class: "site-logo" do %>
+          <%= image_tag "AeroRecall-Logo-Short.png", class: "site-logo-image", alt: "AeroRecall" %>
+        <% end %>
 
-      <% if authenticated? %>
-        <%= button_to "Log out", session_path, method: :delete %>
-      <% else %>
-        <%= link_to "Sign up", new_user_path %>
-        <%= link_to "Log in", new_session_path %>
-      <% end %>
-    </nav>
+        <nav class="site-nav">
+          <% if authenticated? %>
+            <span class="nav-user"><%= Current.user.email_address %></span>
+
+            <%= button_to "Log out",
+                          session_path,
+                          method: :delete,
+                          class: "nav-button" %>
+          <% else %>
+            <%= link_to "Sign up", new_user_path, class: "nav-link" %>
+            <%= link_to "Log in", new_session_path, class: "nav-button" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
 
     <%= yield %>
     

@@ -4,25 +4,29 @@
   <p>Study aviation topics with visual boards, quick quizzes, and instant feedback.</p>
 </section>
 
-<section class="deck-grid">
+<section class="deck-grid home-deck-grid">
   <% @study_decks.each do |deck| %>
-      <%= link_to study_deck_path(deck), class: "deck-card" do %>      <p class="eyebrow">Study Deck</p>
+    <%= link_to study_deck_path(deck), class: "deck-card home-deck-card" do %>
+      <p class="eyebrow">Study Deck</p>
       <h2><%= deck.name %></h2>
+
+      <div class="home-deck-icon">
+        <%= image_tag "weather-deck-cloud.png", class: "home-deck-image" %>
+      </div>
+
       <p><%= deck.description %></p>
 
       <% if authenticated? %>
         <% progress = @deck_progress[deck.id] %>
 
-        <p>
-          <strong>
-            <%= progress[:completed_cards] %> / <%= progress[:total_cards] %>
-            Cards Completed
-          </strong>
-        </p>
+        <div class="progress-bar">
+          <div
+            class="progress-bar-fill"
+            style="width: <%= progress[:percentage] %>%"
+          ></div>
+        </div>
 
-        <p>
-          <%= progress[:percentage] %>% Complete
-        </p>
+        <p><%= progress[:percentage] %>% Complete</p>
       <% end %>
 
       <span>Start studying →</span>
