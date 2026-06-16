@@ -1,23 +1,26 @@
 <section class="study-card-page">
-  <%= link_to "← Back to #{@study_card.study_deck.name}", study_deck_path(@study_card.study_deck), class: "back-link" %>
+  <header class="deck-hero deck-hero-weather study-card-hero">
+    <div class="deck-hero-left">
+      <%= image_tag "weather-deck-cloud.png", class: "deck-hero-image", alt: "Weather cloud" %>
 
-  <header class="study-card-header">
-    <p class="eyebrow"><%= @study_card.study_deck.name %> Deck</p>
-
-    <div class="title-row">
-      <h1><%= @study_card.title %></h1>
-      <p class="card-progress">
-        Card <%= @card_number %> of <%= @total_cards %>
-      </p>
+      <div>
+        <p class="deck-hero-eyebrow"><%= @study_card.study_deck.name %> Deck</p>
+        <h1><%= @study_card.title %></h1>
+        <p><%= @study_card.description %></p>
+      </div>
     </div>
 
-    <p><%= @study_card.description %></p>
+    <div class="deck-hero-actions">
+      <p>Card <%= @card_number %> of <%= @total_cards %></p>
 
-    <% if authenticated? && @study_card_progress&.completed? %>
-      <div class="completion-badge">
-        ✅ Completed
-      </div>
-    <% end %>
+      <% if authenticated? && @study_card_progress&.completed? %>
+        <span class="study-hero-status">Completed</span>
+      <% end %>
+
+      <%= link_to "← Back to #{@study_card.study_deck.name}",
+                  study_deck_path(@study_card.study_deck),
+                  class: "study-hero-secondary-link" %>
+    </div>
   </header>
 
   <% if @study_card.infographic.attached? %>

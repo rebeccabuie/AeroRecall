@@ -1,13 +1,13 @@
 /*
  * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
  */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #1f2937;
+}
 
 .site-header {
   position: sticky;
@@ -64,13 +64,6 @@
 .nav-user {
   color: #6b7280;
   font-size: 0.9rem;
-}
-
- body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #1f2937;
 }
 
 .page-hero {
@@ -130,37 +123,310 @@
   color: #2563eb;
 }
 
+.home-deck-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+  justify-content: start;
+}
+
+.home-deck-card {
+  min-height: 420px;
+  text-align: center;
+  background: #0ea5e9;
+  color: white;
+}
+
+.home-deck-card .eyebrow,
+.home-deck-card p,
+.home-deck-card span {
+  color: white;
+}
+
+.home-deck-card h2 {
+  font-size: 2.25rem;
+  text-transform: uppercase;
+}
+
+.home-deck-image {
+  width: 90%;
+  max-width: 220px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.home-deck-card .progress-bar {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.home-deck-card .progress-bar-fill {
+  background: white;
+}
+
 .study-card-page {
   max-width: none;
   margin: 0;
   padding: 0 0 4rem;
 }
 
-.back-link {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: #2563eb;
+.study-card-page .deck-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 4rem;
+}
+
+.deck-hero-weather {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 1.5rem 2rem 3rem;
+  border-radius: 0;
+  background: #0788c9;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.deck-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.deck-hero-image {
+  width: 180px;
+  max-width: 22vw;
+  height: auto;
+  display: block;
+}
+
+.deck-hero-eyebrow {
+  margin: 0 0 0.25rem;
+  color: white;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.deck-hero-weather h1 {
+  margin: 0;
+  color: white;
+  font-size: 3rem;
+  text-transform: uppercase;
+}
+
+.deck-hero-weather p {
+  color: white;
+}
+
+.deck-hero-actions {
+  text-align: right;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.deck-hero-actions p {
+  margin-bottom: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.deck-hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  background: white;
+  color: #0788c9;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.15s ease;
+}
+
+.deck-hero-link:hover {
+  transform: translateX(2px);
   text-decoration: none;
 }
 
-.study-card-header {
-  margin-bottom: 2rem;
+.study-card-hero {
+  margin-bottom: 1rem;
+  padding: 1.5rem;
 }
 
-.study-card-header h1 {
-  margin: 0;
+.study-card-hero h1 {
   font-size: 2.5rem;
 }
 
-.study-card-header p:last-child {
+.study-hero-status {
+  display: inline-block;
+  margin-top: 0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.study-hero-secondary-link {
+  display: inline-block;
+  margin-top: 0;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.study-hero-secondary-link:hover {
+  text-decoration: underline;
+}
+
+.deck-progress-card {
+  background: white;
+  border-radius: 0 0 16px 16px;
+  padding: 1.25rem;
+  margin: -24px auto 2rem;
+  max-width: 1240px;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.deck-progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.deck-progress-fill {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.deck-progress-text {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.card-thumbnail {
+  width: 160px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.lesson-card {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: white;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lesson-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.deck-card-content {
+  flex: 1;
+}
+
+.deck-card-content h2 {
+  margin-top: 0;
+}
+
+.status-pill {
+  display: inline-block;
+  width: fit-content;
+  margin: 0.25rem 0 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.status-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-in-progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-not-started {
+  background: #f3f4f6;
   color: #4b5563;
 }
 
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.75rem 0 0.35rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #2563eb);
+  border-radius: inherit;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.progress-row .progress-bar {
+  flex: 1;
+  margin: 0;
+}
+
+.progress-percent {
+  min-width: 50px;
+  text-align: right;
+  font-weight: 700;
+  color: #2563eb;
+}
+
 .infographic-frame {
-  margin-bottom: 2rem;
+  max-width: 1100px;
+  margin: 2rem auto;
   padding: 1rem;
   background: white;
   border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.quiz-panel {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 18px;
+  padding: 2rem;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
@@ -168,13 +434,6 @@
   width: 100%;
   height: auto;
   display: block;
-}
-
-.quiz-panel {
-  background: white;
-  border-radius: 18px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .quiz-header {
@@ -235,215 +494,19 @@
   font-weight: 700;
 }
 
-.card-progress {
-  margin: 0;
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  background: #eff6ff !important;
-  color: #2563eb !important;
-  font-weight: 700;
-  white-space: nowrap;
+.study-card-page .infographic-frame {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
 }
 
-.title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.title-row h1 {
-  margin: 0;
-}
-
-.card-thumbnail {
-  width: 160px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-  flex-shrink: 0;
-}
-
-.lesson-card {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-  padding: 1.5rem;
-  border-radius: 18px;
-  background: white;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-}
-
-.deck-card-content {
-  flex: 1;
-}
-
-.deck-card-content h2 {
-  margin-top: 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background: #e5e7eb;
-  border-radius: 999px;
-  overflow: hidden;
-  margin: 0.75rem 0 0.35rem;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #38bdf8, #2563eb);
-  border-radius: inherit;
-}
-
-.home-deck-grid {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
-  justify-content: start;
-}
-
-.home-deck-card {
-  min-height: 420px;
-  text-align: center;
-  background: #0ea5e9;
-  color: white;
-}
-
-.home-deck-card .eyebrow,
-.home-deck-card p,
-.home-deck-card span {
-  color: white;
-}
-
-.home-deck-card h2 {
-  font-size: 2.25rem;
-  text-transform: uppercase;
-}
-
-.home-deck-icon {
-  margin: 1.5rem auto;
-  font-size: 5rem;
-}
-
-.home-deck-card .progress-bar {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.home-deck-card .progress-bar-fill {
-  background: white;
-}
-
-.home-deck-image {
-  width: 90%;
-  max-width: 220px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.deck-hero {
-  margin-bottom: 2rem;
-  padding: 2rem;
-  padding: 1rem 1.5rem 4rem;
-  background: white;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-}
-
-.deck-hero .title-row {
-  align-items: flex-start;
-}
-
-.deck-progress-summary {
-  margin-top: 0.75rem;
-  color: #64748b;
-  font-weight: 700;
-}
-
-.study-card-page .deck-grid {
+.study-card-page .quiz-panel {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1rem 1.5rem 4rem;
 }
 
-.deck-hero-weather {
-  box-sizing: border-box;
+.study-card-page .infographic-image {
   width: 100%;
-  max-width: none;
-  margin: 0 0 3rem;
-  padding: 1.5rem 2rem;
-  border-radius: 0;
-  background: #0788c9;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.deck-hero-left {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.deck-hero-image {
-  width: 180px;
-  max-width: 22vw;
-  height: auto;
   display: block;
-}
-
-.deck-hero-eyebrow {
-  margin: 0 0 0.25rem;
-  color: white;
-  font-size: 1rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.deck-hero-weather h1 {
-  margin: 0;
-  color: white;
-  font-size: 3rem;
-  text-transform: uppercase;
-}
-
-.deck-hero-weather p {
-  color: white;
-}
-
-.deck-hero-actions {
-  text-align: right;
-  margin-left: auto;
-}
-
-.deck-hero-actions p {
-  margin-bottom: 1.5rem;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-}
-
-.deck-hero-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  padding: 0.85rem 1.25rem;
-  border-radius: 999px;
-
-  background: white;
-  color: #0788c9;
-
-  text-decoration: none;
-  font-weight: 700;
-
-  transition: transform 0.15s ease;
-}
-
-.deck-hero-link:hover {
-  transform: translateX(2px);
-  text-decoration: none;
 }
 

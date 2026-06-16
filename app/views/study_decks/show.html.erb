@@ -29,6 +29,25 @@
   <% end %>
 </header>
 
+<div class="deck-progress-card">
+  <div class="progress-row">
+    <div class="deck-progress-bar">
+      <div
+        class="deck-progress-fill"
+        style="width: <%= @deck_progress_percentage %>%;"
+      ></div>
+    </div>
+
+    <span class="progress-percent">
+      <%= @deck_progress_percentage %>%
+    </span>
+  </div>
+
+  <p class="deck-progress-text">
+    <%= @completed_cards_count %> of <%= @total_cards_count %> cards completed
+  </p>
+</div>
+
   <section class="deck-grid">
     <% @study_deck.study_cards.order(:position).each do |card| %>
       <%= link_to study_card_path(card), class: "lesson-card" do %>
@@ -40,32 +59,39 @@
           <h2><%= card.title %></h2>
           <p><%= card.description %></p>
 
-          <% if authenticated? %>
-            <% progress = @study_card_progresses[card.id] %>
+                <% if authenticated? %>
+                  <% progress = @study_card_progresses[card.id] %>
 
-            <% if progress.present? %>
-              <% percent_complete = ((progress.questions_answered.to_f / card.questions.count) * 100).round %>
+                  <% if progress.present? %>
+                    <% percent_complete = ((progress.questions_answered.to_f / card.questions.count) * 100).round %>
 
-              <% if progress.completed? %>
-                <p>✅ Completed</p>
-              <% else %>
-                <p>📚 In Progress</p>
-              <% end %>
+                    <% if progress.completed? %>
+                      <p class="status-pill status-completed">Completed</p>
+                    <% elsif progress.questions_answered.zero? %>
+                      <p class="status-pill status-not-started">Not Started</p>
+                    <% else %>
+                      <p class="status-pill status-in-progress">In Progress</p>
+                    <% end %>
 
-              <div class="progress-bar">
-                <div
-                  class="progress-bar-fill"
-                  style="width: <%= percent_complete %>%"
-                ></div>
+                    <div class="progress-row">
+                      <div class="progress-bar">
+                        <div
+                          class="progress-bar-fill"
+                          style="width: <%= percent_complete %>%"
+                        ></div>
+                      </div>
+
+                      <span class="progress-percent">
+                        <%= percent_complete %>%
+                      </span>
+                    </div>
+
+                  <% else %>
+                    <p class="status-pill status-not-started">Not Started</p>
+                  <% end %>
+
+                <% end %>
               </div>
-
-              <p><%= percent_complete %>% Complete</p>
-
-            <% else %>
-              <p>Not Started</p>
-            <% end %>
-
-            <% end %>
 
             <span>Start lesson →</span>
         </div>

@@ -9,6 +9,16 @@ class StudyDecksController < ApplicationController
   def show
     @study_deck = StudyDeck.find(params[:id])
     @study_card_progresses = current_user_progresses
+
+    @total_cards_count = @study_deck.study_cards.count
+    @completed_cards_count = @study_card_progresses.values.count(&:completed?)
+
+    @deck_progress_percentage =
+      if @total_cards_count.zero?
+        0
+      else
+        ((@completed_cards_count.to_f / @total_cards_count) * 100).round
+      end
   end
 
   private
