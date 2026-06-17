@@ -48,6 +48,29 @@
   </p>
 </div>
 
+  <% if authenticated? && @deck_progress_percentage == 100 %>
+    <section class="deck-complete-card">
+      <p class="deck-complete-eyebrow">Deck Complete</p>
+      <h2>Weather Deck Complete! 🎉</h2>
+      <p>
+        You completed all <%= @total_cards_count %> lessons in this deck.
+        Nice work!
+      </p>
+    </section>
+  <% end %>
+
+  <% if authenticated? && @deck_progress_percentage == 100 %>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <script>
+      confetti({
+        particleCount: 140,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
+    </script>
+  <% end %>
+
   <section class="deck-grid">
     <% @study_deck.study_cards.order(:position).each do |card| %>
       <%= link_to study_card_path(card), class: "lesson-card" do %>
@@ -93,10 +116,12 @@
                 <% end %>
               </div>
 
-            <span>Start lesson →</span>
+            <span class="lesson-button">
+              Start Lesson ✈️
+            </span>
         </div>
       <% end %>
     <% end %>
   </section>
-  <%= link_to "← Back to Decks", root_path, class: "back-link" %>
+  <%= link_to "← Back to Decks", root_path, class: "deck-page-back-button" %>
 </section>

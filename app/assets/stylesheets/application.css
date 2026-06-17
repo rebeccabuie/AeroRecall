@@ -162,6 +162,27 @@ body {
   background: white;
 }
 
+.deck-page-back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1.5rem 4rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  background: white;
+  color: #0788c9;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid #dbeafe;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.deck-page-back-button:hover {
+  background: #f8fafc;
+  transform: translateX(-2px);
+  text-decoration: none;
+}
+
 .study-card-page {
   max-width: none;
   margin: 0;
@@ -274,19 +295,6 @@ body {
   font-weight: 700;
 }
 
-.study-hero-secondary-link {
-  display: inline-block;
-  margin-top: 0;
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.study-hero-secondary-link:hover {
-  text-decoration: underline;
-}
-
 .deck-progress-card {
   background: white;
   border-radius: 0 0 16px 16px;
@@ -343,6 +351,33 @@ body {
 .lesson-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.lesson-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1.15rem;
+  border-radius: 999px;
+
+  background: #0788c9;
+  color: white;
+
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.lesson-card:hover .lesson-button {
+  transform: translateX(2px);
+}
+
+.lesson-button:hover {
+  background: #0678b1;
 }
 
 .deck-card-content {
@@ -510,3 +545,169 @@ body {
   display: block;
 }
 
+.study-card-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 2rem 0;
+}
+
+.study-hero-card-count {
+  display: inline-flex;
+  margin: 0;
+}
+
+.study-nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.study-nav-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.study-nav-primary:hover {
+  transform: translateY(-2px);
+}
+
+.study-nav-secondary,
+.study-nav-deck {
+  background: white;
+  color: #1e3a8a;
+  border: 1px solid #dbeafe;
+}
+
+.study-nav-secondary:hover,
+.study-nav-deck:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+}
+
+.study-nav-side,
+.study-nav-center {
+  flex: 1;
+}
+
+.study-nav-center {
+  display: flex;
+  justify-content: center;
+}
+
+.study-nav-side-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deck-complete-card {
+  margin: 1.5rem 0 2rem;
+  padding: 2rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #eff6ff, #ecfeff);
+  border: 1px solid #bfdbfe;
+  text-align: center;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+}
+
+.deck-complete-eyebrow {
+  margin: 0 0 0.5rem;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.deck-complete-card h2 {
+  margin: 0 0 0.5rem;
+  color: #1e3a8a;
+}
+
+.deck-complete-card p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .study-card-page {
+    overflow-x: hidden;
+  }
+
+  .study-card-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .deck-hero-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .deck-hero-image {
+    width: 55px;
+    max-width: 55px;
+    height: auto;
+  }
+
+  .deck-hero-weather h1,
+  .study-card-hero h1 {
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+
+  .deck-hero-actions {
+    width: 100%;
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  .study-hero-card-count,
+  .study-hero-status {
+    margin: 0;
+  }
+
+  .deck-hero-actions .deck-hero-link {
+    grid-column: 1 / -1;
+  }
+
+  .study-card-navigation {
+    flex-direction: column;
+  }
+
+  .study-nav-side,
+  .study-nav-center,
+  .study-nav-side-right {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .study-nav-button {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .quiz-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

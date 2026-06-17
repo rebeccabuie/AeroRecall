@@ -11,15 +11,17 @@
     </div>
 
     <div class="deck-hero-actions">
-      <p>Card <%= @card_number %> of <%= @total_cards %></p>
+      <span class="study-hero-card-count">
+        Card <%= @card_number %> of <%= @total_cards %>
+      </span>
 
       <% if authenticated? && @study_card_progress&.completed? %>
         <span class="study-hero-status">Completed</span>
       <% end %>
 
       <%= link_to "← Back to #{@study_card.study_deck.name}",
-                  study_deck_path(@study_card.study_deck),
-                  class: "study-hero-secondary-link" %>
+            study_deck_path(@study_card.study_deck),
+            class: "deck-hero-link" %>
     </div>
   </header>
 
@@ -112,4 +114,32 @@
       <% end %>
     </ol>
   </section>
+
+  <nav class="study-card-navigation">
+    <div class="study-nav-side">
+      <% if @previous_card %>
+        <%= link_to "← Previous Lesson",
+                    study_card_path(@previous_card),
+                    class: "study-nav-button study-nav-secondary" %>
+      <% end %>
+    </div>
+
+    <div class="study-nav-center">
+      <%= link_to "Back to Deck",
+                  study_deck_path(@study_card.study_deck),
+                  class: "study-nav-button study-nav-deck" %>
+    </div>
+
+    <div class="study-nav-side study-nav-side-right">
+      <% if @next_card %>
+        <%= link_to "Next Lesson →",
+                    study_card_path(@next_card),
+                    class: "study-nav-button study-nav-primary" %>
+      <% else %>
+        <%= link_to "View Deck Progress",
+                    study_deck_path(@study_card.study_deck),
+                    class: "study-nav-button study-nav-primary" %>
+      <% end %>
+    </div>
+  </nav>
 </section>

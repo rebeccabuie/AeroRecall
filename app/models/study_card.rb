@@ -10,4 +10,8 @@ class StudyCard < ApplicationRecord
   def next_card
     study_deck.study_cards.where("position > ?", position).order(:position).first
   end
+
+  def previous_card
+    study_deck.study_cards.where("position < ?", position).order(position: :desc).first
+  end
 end

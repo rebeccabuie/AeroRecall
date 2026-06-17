@@ -3,6 +3,7 @@ class StudyCardsController < ApplicationController
 
   def show
     @study_card = StudyCard.find(params[:id])
+    @previous_card = @study_card.previous_card
     @next_card = @study_card.next_card
 
     @card_number = @study_card.position
