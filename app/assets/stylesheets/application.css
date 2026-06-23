@@ -195,16 +195,17 @@ body {
   padding: 1rem 1.5rem 4rem;
 }
 
-.deck-hero-weather {
+.deck-hero {
   box-sizing: border-box;
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 1.5rem 2rem 3rem;
+  padding: 1.5rem 2rem;
   border-radius: 0;
   background: #0788c9;
   color: white;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
@@ -214,6 +215,7 @@ body {
   display: flex;
   align-items: center;
   gap: 2rem;
+  flex: 1;
 }
 
 .deck-hero-image {
@@ -231,14 +233,14 @@ body {
   text-transform: uppercase;
 }
 
-.deck-hero-weather h1 {
+.deck-hero h1 {
   margin: 0;
   color: white;
   font-size: 3rem;
   text-transform: uppercase;
 }
 
-.deck-hero-weather p {
+.deck-hero p {
   color: white;
 }
 
@@ -248,11 +250,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .deck-hero-actions p {
-  margin-bottom: 0;
+  margin: 0;
   font-size: 0.85rem;
   text-transform: uppercase;
 }
@@ -261,7 +263,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.85rem 1.25rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
   border-radius: 999px;
   background: white;
   color: #0788c9;
@@ -344,6 +347,7 @@ body {
   background: white;
   text-decoration: none;
   color: inherit;
+  grid-template-columns: 110px 1fr;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -357,16 +361,13 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-
   padding: 0.75rem 1.15rem;
   border-radius: 999px;
-
   background: #0788c9;
   color: white;
-
   font-weight: 700;
   text-decoration: none;
-
+  grid-column: 1 / -1;
   transition:
     transform 0.15s ease,
     background 0.15s ease;
@@ -378,6 +379,23 @@ body {
 
 .lesson-button:hover {
   background: #0678b1;
+}
+
+.lesson-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.lesson-status-row .status-pill {
+  margin: 0;
+}
+
+.lesson-score {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2563eb;
 }
 
 .deck-card-content {
@@ -650,19 +668,26 @@ body {
     align-items: flex-start;
   }
 
-  .deck-hero-left {
+  .deck-hero {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 1.25rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .deck-hero-left {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
   }
 
   .deck-hero-image {
     width: 55px;
     max-width: 55px;
-    height: auto;
   }
 
-  .deck-hero-weather h1,
+  .deck-hero h1,
   .study-card-hero h1 {
     font-size: 2rem;
     line-height: 1.05;
@@ -670,22 +695,27 @@ body {
 
   .deck-hero-actions {
     width: 100%;
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: start;
+    margin-left: 0;
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem 0.75rem;
-    text-align: left;
+  }
+
+  .deck-hero-actions p {
+    margin: 0;
+  }
+
+  .study-card-hero .deck-hero-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   .study-hero-card-count,
   .study-hero-status {
     margin: 0;
-  }
-
-  .deck-hero-actions .deck-hero-link {
-    grid-column: 1 / -1;
   }
 
   .study-card-navigation {
@@ -709,5 +739,38 @@ body {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+  }
+
+  .study-card-page .deck-grid {
+  padding: 1rem 1rem 4rem;
+  }
+
+  .lesson-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    align-items: start;
+  }
+
+  .card-thumbnail {
+    width: 120px;
+    height: 150px;
+  }
+
+  .lesson-button {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  .lesson-status-row {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .progress-row {
+    align-items: center;
   }
 }

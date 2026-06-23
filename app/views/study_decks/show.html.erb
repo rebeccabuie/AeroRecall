@@ -1,5 +1,5 @@
 <section class="study-card-page">
-<header class="deck-hero deck-hero-weather">
+<header class="deck-hero deck-hero">
   <div class="deck-hero-left">
     <%= image_tag "weather-deck-cloud.png", class: "deck-hero-image", alt: "Weather cloud" %>
 
@@ -88,13 +88,19 @@
                   <% if progress.present? %>
                     <% percent_complete = ((progress.questions_answered.to_f / card.questions.count) * 100).round %>
 
-                    <% if progress.completed? %>
-                      <p class="status-pill status-completed">Completed</p>
-                    <% elsif progress.questions_answered.zero? %>
-                      <p class="status-pill status-not-started">Not Started</p>
-                    <% else %>
-                      <p class="status-pill status-in-progress">In Progress</p>
-                    <% end %>
+                    <div class="lesson-status-row">
+                      <% if progress.completed? %>
+                        <p class="status-pill status-completed">Completed</p>
+                      <% elsif progress.questions_answered.zero? %>
+                        <p class="status-pill status-not-started">Not Started</p>
+                      <% else %>
+                        <p class="status-pill status-in-progress">In Progress</p>
+                      <% end %>
+
+                      <span class="lesson-score">
+                        Score: <%= progress.correct_answers %> / <%= card.questions.count %>
+                      </span>
+                    </div>
 
                     <div class="progress-row">
                       <div class="progress-bar">
