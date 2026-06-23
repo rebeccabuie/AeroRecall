@@ -1,7 +1,18 @@
 <section class="study-card-page">
-<header class="deck-hero deck-hero">
+<header class="deck-hero deck-<%= @study_deck.name.parameterize %>">
   <div class="deck-hero-left">
-    <%= image_tag "weather-deck-cloud.png", class: "deck-hero-image", alt: "Weather cloud" %>
+    <% deck_image =
+      case @study_deck.name
+      when "Weather"
+        "weather-deck-cloud.png"
+      when "Rules & Regulations"
+        "rules-and-regs-deck.png"
+      else
+        "weather-deck-cloud.png"
+      end
+    %>
+
+    <%= image_tag deck_image, class: "deck-hero-image", alt: "#{@study_deck.name} icon" %>
 
     <div>
       <p class="deck-hero-eyebrow">Study Deck</p>
@@ -51,7 +62,7 @@
   <% if authenticated? && @deck_progress_percentage == 100 %>
     <section class="deck-complete-card">
       <p class="deck-complete-eyebrow">Deck Complete</p>
-      <h2>Weather Deck Complete! 🎉</h2>
+      <h2><%= @study_deck.name %> Deck Complete! 🎉</h2>
       <p>
         You completed all <%= @total_cards_count %> lessons in this deck.
         Nice work!

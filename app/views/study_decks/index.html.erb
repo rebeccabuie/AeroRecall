@@ -6,12 +6,22 @@
 
 <section class="deck-grid home-deck-grid">
   <% @study_decks.each do |deck| %>
-    <%= link_to study_deck_path(deck), class: "deck-card home-deck-card" do %>
-      <p class="eyebrow">Study Deck</p>
+      <%= link_to study_deck_path(deck), class: "deck-card home-deck-card deck-#{deck.name.parameterize}" do %>      <p class="eyebrow">Study Deck</p>
       <h2><%= deck.name %></h2>
 
       <div class="home-deck-icon">
-        <%= image_tag "weather-deck-cloud.png", class: "home-deck-image" %>
+        <% deck_image =
+          case deck.name
+          when "Weather"
+            "weather-deck-cloud.png"
+          when "Rules & Regulations"
+            "rules-and-regs-deck.png"
+          else
+            "weather-deck-cloud.png"
+          end
+        %>
+
+        <%= image_tag deck_image, class: "deck-card-image" %>
       </div>
 
       <p><%= deck.description %></p>

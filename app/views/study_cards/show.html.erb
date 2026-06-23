@@ -1,8 +1,20 @@
 <section class="study-card-page">
-  <header class="deck-hero deck-hero study-card-hero">
+  <header class="deck-hero deck-<%= @study_card.study_deck.name.parameterize %> study-card-hero">
     <div class="deck-hero-left">
-      <%= image_tag "weather-deck-cloud.png", class: "deck-hero-image", alt: "Weather cloud" %>
+      <% deck_image =
+        case @study_card.study_deck.name
+        when "Weather"
+          "weather-deck-cloud.png"
+        when "Rules & Regulations"
+          "rules-and-regs-deck.png"
+        else
+          "weather-deck-cloud.png"
+        end
+      %>
 
+      <%= image_tag deck_image,
+                    class: "deck-hero-image",
+                    alt: "#{@study_card.study_deck.name} icon" %>
       <div>
         <p class="deck-hero-eyebrow"><%= @study_card.study_deck.name %> Deck</p>
         <h1><%= @study_card.title %></h1>

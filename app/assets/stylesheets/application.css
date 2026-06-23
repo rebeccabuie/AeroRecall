@@ -162,6 +162,19 @@ body {
   background: white;
 }
 
+.deck-rules-regulations .deck-hero-image {
+  width: 120px;
+  max-width: 120px;
+}
+
+.deck-weather {
+  background: #0788c9;
+}
+
+.deck-rules-regulations {
+  background: #f15a24;
+}
+
 .deck-page-back-button {
   display: inline-flex;
   align-items: center;
@@ -200,9 +213,8 @@ body {
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 2rem 2rem;
   border-radius: 0;
-  background: #0788c9;
   color: white;
   display: flex;
   flex-direction: row;
@@ -404,6 +416,24 @@ body {
 
 .deck-card-content h2 {
   margin-top: 0;
+}
+
+.home-deck-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 220px;
+  overflow: hidden;
+}
+
+.deck-card-image {
+  max-width: 85%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.deck-rules-regulations .deck-card-image {
+  max-width: 50%;
 }
 
 .status-pill {
