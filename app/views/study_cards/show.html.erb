@@ -1,40 +1,42 @@
 <section class="study-card-page">
   <header class="deck-hero deck-<%= @study_card.study_deck.name.parameterize %> study-card-hero">
-    <div class="deck-hero-left">
-      <% deck_image =
-        case @study_card.study_deck.name
-        when "Weather"
-          "weather-deck-cloud.png"
-        when "Rules & Regulations"
-          "rules-and-regs-deck.png"
-        else
-          "weather-deck-cloud.png"
-        end
-      %>
+    <div class="deck-hero-inner">  
+      <div class="deck-hero-left">
+          <% deck_image =
+            case @study_card.study_deck.name
+            when "Weather"
+              "weather-deck-cloud.png"
+            when "Rules & Regulations"
+              "rules-and-regs-deck.png"
+            else
+              "weather-deck-cloud.png"
+            end
+          %>
 
-      <%= image_tag deck_image,
-                    class: "deck-hero-image",
-                    alt: "#{@study_card.study_deck.name} icon" %>
-      <div>
-        <p class="deck-hero-eyebrow"><%= @study_card.study_deck.name %> Deck</p>
-        <h1><%= @study_card.title %></h1>
-        <p><%= @study_card.description %></p>
+          <%= image_tag deck_image,
+                        class: "deck-hero-image",
+                        alt: "#{@study_card.study_deck.name} icon" %>
+          <div>
+            <p class="deck-hero-eyebrow"><%= @study_card.study_deck.name %> Deck</p>
+            <h1><%= @study_card.title %></h1>
+            <p><%= @study_card.description %></p>
+          </div>
+        </div>
+
+        <div class="deck-hero-actions">
+          <span class="study-hero-card-count">
+            Card <%= @card_number %> of <%= @total_cards %>
+          </span>
+
+          <% if authenticated? && @study_card_progress&.completed? %>
+            <span class="study-hero-status">Completed</span>
+          <% end %>
+
+          <%= link_to "← Back to #{@study_card.study_deck.name}",
+                study_deck_path(@study_card.study_deck),
+                class: "deck-hero-link" %>
+        </div>
       </div>
-    </div>
-
-    <div class="deck-hero-actions">
-      <span class="study-hero-card-count">
-        Card <%= @card_number %> of <%= @total_cards %>
-      </span>
-
-      <% if authenticated? && @study_card_progress&.completed? %>
-        <span class="study-hero-status">Completed</span>
-      <% end %>
-
-      <%= link_to "← Back to #{@study_card.study_deck.name}",
-            study_deck_path(@study_card.study_deck),
-            class: "deck-hero-link" %>
-    </div>
   </header>
 
   <% if @study_card.infographic.attached? %>

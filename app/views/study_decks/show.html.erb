@@ -1,62 +1,72 @@
 <section class="study-card-page">
 <header class="deck-hero deck-<%= @study_deck.name.parameterize %>">
-  <div class="deck-hero-left">
-    <% deck_image =
-      case @study_deck.name
-      when "Weather"
-        "weather-deck-cloud.png"
-      when "Rules & Regulations"
-        "rules-and-regs-deck.png"
-      else
-        "weather-deck-cloud.png"
-      end
-    %>
+  <div class="deck-hero-inner">
 
-    <%= image_tag deck_image, class: "deck-hero-image", alt: "#{@study_deck.name} icon" %>
+    <div class="deck-hero-left">
+      <% deck_image =
+          case @study_deck.name
+          when "Weather"
+            "weather-deck-cloud.png"
+          when "Rules & Regulations"
+            "rules-and-regs-deck.png"
+          else
+            "weather-deck-cloud.png"
+          end
+      %>
 
-    <div>
-      <p class="deck-hero-eyebrow">Study Deck</p>
-      <h1><%= @study_deck.name %></h1>
-      <p><%= @study_deck.description %></p>
+      <%= image_tag deck_image,
+          class: "deck-hero-image",
+          alt: "#{@study_deck.name} icon" %>
+
+      <div>
+        <p class="deck-hero-eyebrow">Study Deck</p>
+        <h1><%= @study_deck.name %></h1>
+        <p><%= @study_deck.description %></p>
+      </div>
     </div>
+
+    <% if authenticated? %>
+      <div class="deck-hero-actions">
+        <% completed_cards = @study_card_progresses.values.count(&:completed?) %>
+        <% total_cards = @study_deck.study_cards.count %>
+        <% remaining_cards = total_cards - completed_cards %>
+
+        <p><%= remaining_cards %>/<%= total_cards %> Cards Remaining</p>
+
+        <% continue_card =
+             @study_deck.first_incomplete_card_for(Current.user) ||
+             @study_deck.study_cards.order(:position).first %>
+
+        <%= link_to "Continue Studying ✈️",
+                    study_card_path(continue_card),
+                    class: "deck-hero-link" %>
+      </div>
+    <% end %>
+
   </div>
-
-  <% if authenticated? %>
-    <div class="deck-hero-actions">
-      <% completed_cards = @study_card_progresses.values.count(&:completed?) %>
-      <% total_cards = @study_deck.study_cards.count %>
-      <% remaining_cards = total_cards - completed_cards %>
-
-      <p><%= remaining_cards %>/<%= total_cards %> Cards Remaining</p>
-
-      <% continue_card =
-           @study_deck.first_incomplete_card_for(Current.user) ||
-           @study_deck.study_cards.order(:position).first %>
-
-      <%= link_to "Continue Studying ✈️",
-                  study_card_path(continue_card),
-                  class: "deck-hero-link" %>
-    </div>
-  <% end %>
 </header>
 
 <div class="deck-progress-card">
-  <div class="progress-row">
-    <div class="deck-progress-bar">
-      <div
-        class="deck-progress-fill"
-        style="width: <%= @deck_progress_percentage %>%;"
-      ></div>
+  <div class="deck-progress-inner">
+
+    <div class="progress-row">
+      <div class="deck-progress-bar">
+        <div
+          class="deck-progress-fill"
+          style="width: <%= @deck_progress_percentage %>%;">
+        </div>
+      </div>
+
+      <span class="progress-percent">
+        <%= @deck_progress_percentage %>%
+      </span>
     </div>
 
-    <span class="progress-percent">
-      <%= @deck_progress_percentage %>%
-    </span>
-  </div>
+    <p class="deck-progress-text">
+      <%= @completed_cards_count %> of <%= @total_cards_count %> cards completed
+    </p>
 
-  <p class="deck-progress-text">
-    <%= @completed_cards_count %> of <%= @total_cards_count %> cards completed
-  </p>
+  </div>
 </div>
 
   <% if authenticated? && @deck_progress_percentage == 100 %>
