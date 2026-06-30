@@ -352,6 +352,16 @@ body {
   color: #6b7280;
 }
 
+.deck-page-footer {
+  width: 100%;
+  padding: 3rem 2rem;
+}
+
+.deck-page-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .card-thumbnail {
   width: 160px;
   height: 200px;
@@ -604,12 +614,10 @@ body {
 }
 
 .study-card-navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  box-sizing: border-box;
+  width: 100%;
   margin-top: 2rem;
-  padding: 2rem 0;
+  padding: 3rem 2rem;
 }
 
 .study-hero-card-count {
@@ -653,6 +661,7 @@ body {
 .study-nav-side,
 .study-nav-center {
   flex: 1;
+  min-width: 0;
 }
 
 .study-nav-center {
@@ -663,6 +672,17 @@ body {
 .study-nav-side-right {
   display: flex;
   justify-content: flex-end;
+}
+
+.study-card-navigation-inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
 .deck-complete-card {

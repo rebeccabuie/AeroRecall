@@ -129,7 +129,9 @@
     </ol>
   </section>
 
-  <nav class="study-card-navigation">
+<div class="study-card-navigation">
+  <nav class="study-card-navigation-inner">
+
     <div class="study-nav-side">
       <% if @previous_card %>
         <%= link_to "← Previous Lesson",
@@ -155,5 +157,7 @@
                     class: "study-nav-button study-nav-primary" %>
       <% end %>
     </div>
+
   </nav>
+</div>
 </section>
