@@ -1,11 +1,21 @@
-warnings_card = @weather.study_cards.find_or_create_by!(title: "Aviation Weather Warnings") do |card|
-  card.description = "AIRMETs, SIGMETs, Convective SIGMETs, HIWAS, and in-flight weather services."
-  card.position = 5
-end
+warnings_card = @weather.study_cards.find_or_initialize_by(
+  title: "Aviation Weather Warnings"
+)
+
+warnings_card.assign_attributes(
+  description: "AIRMETs, SIGMETs, Convective SIGMETs, HIWAS, and in-flight weather services.",
+  position: 7
+)
+
+warnings_card.save!
 
 unless warnings_card.infographic.attached?
   warnings_card.infographic.attach(
-    io: File.open(Rails.root.join("db/seed_images/GroundSchool-Aviation-Weather-Warnings.jpg")),
+    io: File.open(
+      Rails.root.join(
+        "db/seed_images/GroundSchool-Aviation-Weather-Warnings.jpg"
+      )
+    ),
     filename: "GroundSchool-Aviation-Weather-Warnings.jpg"
   )
 end
@@ -58,7 +68,7 @@ warnings_card.questions.find_or_create_by!(
   question.option_d = "Severe thunderstorms"
 
   question.correct_option = "C"
-  question.explanation = "AIRMET Zulu is issued for moderate icing and provides freezing level information."
+  question.explanation = "AIRMET Zulu is issued for moderate icing and provides freezing-level information."
   question.position = 4
 end
 
@@ -71,7 +81,7 @@ warnings_card.questions.find_or_create_by!(
   question.option_d = "Airport traffic information"
 
   question.correct_option = "B"
-  question.explanation = "SIGMETs are issued for significant weather hazards such as severe icing, severe turbulence, dust storms, volcanic ash, and other conditions hazardous to all aircraft."
+  question.explanation = "SIGMETs are issued for significant nonconvective hazards such as severe icing, severe or extreme turbulence, dust storms, sandstorms, and volcanic ash that may affect all aircraft."
   question.position = 5
 end
 
@@ -97,7 +107,7 @@ warnings_card.questions.find_or_create_by!(
   question.option_d = "Calculating density altitude"
 
   question.correct_option = "A"
-  question.explanation = "HIWAS stands for Hazardous Inflight Weather Advisory Service and broadcasts hazardous weather information to pilots."
+  question.explanation = "HIWAS stands for Hazardous Inflight Weather Advisory Service and provided continuous recorded hazardous weather broadcasts over selected VOR frequencies."
   question.position = 7
 end
 
@@ -110,6 +120,32 @@ warnings_card.questions.find_or_create_by!(
   question.option_d = "ATIS"
 
   question.correct_option = "C"
-  question.explanation = "Flight Watch (122.0 MHz) was discontinued in 2015. Its services were absorbed into Flight Service."
+  question.explanation = "Flight Watch on 122.0 MHz was discontinued in 2015, and its services were absorbed into Flight Service."
   question.position = 8
+end
+
+warnings_card.questions.find_or_create_by!(
+  question_text: "Which combination of conditions may result in a Convective SIGMET?"
+) do |question|
+  question.option_a = "Tornadoes, embedded thunderstorms, hail at least 3/4 inch, and severe thunderstorms"
+  question.option_b = "Moderate icing, light turbulence, and mountain obscuration"
+  question.option_c = "Low ceilings, fog, and light rain"
+  question.option_d = "Volcanic ash, dust storms, and sandstorms"
+
+  question.correct_option = "A"
+  question.explanation = "Convective SIGMETs are issued for hazardous thunderstorm-related conditions, including tornadoes, embedded thunderstorms, hail at least 3/4 inch in diameter, and severe thunderstorms."
+  question.position = 9
+end
+
+warnings_card.questions.find_or_create_by!(
+  question_text: "Which frequency can a pilot use to contact Flight Service for in-flight weather information?"
+) do |question|
+  question.option_a = "121.5 MHz"
+  question.option_b = "122.0 MHz"
+  question.option_c = "122.2 MHz"
+  question.option_d = "123.0 MHz"
+
+  question.correct_option = "C"
+  question.explanation = "Flight Service can commonly be contacted on 122.2 MHz for in-flight weather information. Pilots should verify the appropriate frequency for their location."
+  question.position = 10
 end

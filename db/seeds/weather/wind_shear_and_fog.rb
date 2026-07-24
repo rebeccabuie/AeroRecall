@@ -1,7 +1,13 @@
-wind_shear_card = @weather.study_cards.find_or_create_by!(title: "Wind Shear and Fog") do |card|
-  card.description = "Wind shear, microbursts, fog formation, dew point, evaporation, and sublimation."
-  card.position = 3
-end
+wind_shear_card = @weather.study_cards.find_or_initialize_by(
+  title: "Wind Shear and Fog"
+)
+
+wind_shear_card.assign_attributes(
+  description: "Wind shear, microbursts, fog formation, dew point, evaporation, and sublimation.",
+  position: 5
+)
+
+wind_shear_card.save!
 
 unless wind_shear_card.infographic.attached?
   wind_shear_card.infographic.attach(
@@ -86,4 +92,43 @@ wind_shear_card.questions.find_or_create_by!(
   question.correct_option = "C"
   question.explanation = "Sublimation is when ice changes directly into water vapor without becoming liquid first."
   question.position = 6
+end
+
+wind_shear_card.questions.find_or_create_by!(
+  question_text: "Which conditions are commonly associated with wind shear?"
+) do |question|
+  question.option_a = "Weather fronts, mountain waves, strong upper-level winds, and thunderstorms"
+  question.option_b = "Clear skies, calm winds, and high pressure"
+  question.option_c = "Only freezing rain and snow"
+  question.option_d = "Fog and light surface winds only"
+
+  question.correct_option = "A"
+  question.explanation = "Wind shear is commonly associated with weather fronts, mountain waves, strong upper-level winds greater than 25 knots, and thunderstorms."
+  question.position = 7
+end
+
+wind_shear_card.questions.find_or_create_by!(
+  question_text: "Which type of fog forms when moist air moves up a slope and cools?"
+) do |question|
+  question.option_a = "Radiation fog"
+  question.option_b = "Advection fog"
+  question.option_c = "Upslope fog"
+  question.option_d = "Steam fog"
+
+  question.correct_option = "C"
+  question.explanation = "Upslope fog forms when moist air is forced up a slope, expands, cools, and reaches saturation."
+  question.position = 8
+end
+
+wind_shear_card.questions.find_or_create_by!(
+  question_text: "How does steam fog, also called sea smoke, form?"
+) do |question|
+  question.option_a = "Cold, dry air moves over warmer water"
+  question.option_b = "Warm, moist air moves over frozen ground"
+  question.option_c = "The ground cools rapidly on a clear night"
+  question.option_d = "Moist air moves uphill and cools"
+
+  question.correct_option = "A"
+  question.explanation = "Steam fog forms when cold, dry air moves over warmer water and water vapor condenses in the colder air above the surface."
+  question.position = 9
 end

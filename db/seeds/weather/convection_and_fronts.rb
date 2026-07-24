@@ -1,7 +1,13 @@
-convection_card = @weather.study_cards.find_or_create_by!(title: "Convection and Fronts") do |card|
-  card.description = "Convection, sea breezes, Coriolis effect, fronts, ISA, lapse rates, and friction."
-  card.position = 4
-end
+convection_card = @weather.study_cards.find_or_initialize_by(
+  title: "Convection and Fronts"
+)
+
+convection_card.assign_attributes(
+  description: "Convection, sea breezes, Coriolis effect, fronts, ISA, lapse rates, and friction.",
+  position: 6
+)
+
+convection_card.save!
 
 unless convection_card.infographic.attached?
   convection_card.infographic.attach(
@@ -112,4 +118,30 @@ convection_card.questions.find_or_create_by!(
   question.correct_option = "B"
   question.explanation = "Air pressure decreases with altitude because there is less air above you pressing down."
   question.position = 8
+end
+
+convection_card.questions.find_or_create_by!(
+  question_text: "What commonly changes when an aircraft crosses a front?"
+) do |question|
+  question.option_a = "Only visibility"
+  question.option_b = "Wind direction and temperature"
+  question.option_c = "Only cloud height"
+  question.option_d = "The Coriolis effect"
+
+  question.correct_option = "B"
+  question.explanation = "Crossing a front commonly brings changes in wind direction and temperature because the aircraft is moving between different air masses."
+  question.position = 9
+end
+
+convection_card.questions.find_or_create_by!(
+  question_text: "What is the standard pressure lapse rate near sea level?"
+) do |question|
+  question.option_a = "About 1 inHg per 1,000 feet"
+  question.option_b = "About 2 inHg per 1,000 feet"
+  question.option_c = "About 0.1 inHg per 1,000 feet"
+  question.option_d = "Pressure does not change with altitude"
+
+  question.correct_option = "A"
+  question.explanation = "Near sea level, atmospheric pressure decreases by approximately 1 inch of mercury for each 1,000 feet of altitude gained."
+  question.position = 10
 end
