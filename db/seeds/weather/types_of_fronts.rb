@@ -123,4 +123,3 @@ types_of_fronts_card.questions.find_or_create_by!(
   question.explanation = "Occluded fronts often produce complex weather with a mixture of cloud types and widespread precipitation as a cold front overtakes a warm front."
   question.position = 8
 end
-
