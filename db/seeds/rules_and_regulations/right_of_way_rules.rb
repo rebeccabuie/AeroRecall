@@ -1,9 +1,13 @@
-right_of_way_card = @rules_and_regs.study_cards.find_or_create_by!(
+right_of_way_card = @rules_and_regs.study_cards.find_or_initialize_by(
   title: "Right-of-Way Rules"
-) do |card|
-  card.description = "FAA right-of-way rules for aircraft operations."
-  card.position = 3
-end
+)
+
+right_of_way_card.assign_attributes(
+  description: "FAA right-of-way rules for aircraft operations.",
+  position: 3
+)
+
+right_of_way_card.save!
 
 unless right_of_way_card.infographic.attached?
   right_of_way_card.infographic.attach(
@@ -14,106 +18,162 @@ unless right_of_way_card.infographic.attached?
   )
 end
 
-right_of_way_card.questions.find_or_create_by!(
+question = right_of_way_card.questions.find_or_initialize_by(
   question_text: "Which aircraft always has the highest right-of-way priority?"
-) do |question|
-  question.option_a = "Balloon"
-  question.option_b = "Glider"
-  question.option_c = "Aircraft in distress"
-  question.option_d = "Airship"
+)
 
-  question.correct_option = "C"
-  question.explanation = "An aircraft in distress always has the highest right-of-way priority. All other aircraft must give way to assist in the safe resolution of the emergency."
-  question.position = 1
-end
+question.assign_attributes(
+  option_a: "Balloon",
+  option_b: "Glider",
+  option_c: "Aircraft in distress",
+  option_d: "Aircraft towing another aircraft",
+  correct_option: "C",
+  explanation: "An aircraft in distress has the right-of-way over all other air traffic. All other aircraft must give way.",
+  position: 1
+)
 
-right_of_way_card.questions.find_or_create_by!(
-  question_text: "Which aircraft has the right-of-way over an airplane during normal operations?"
-) do |question|
-  question.option_a = "Helicopter"
-  question.option_b = "Glider"
-  question.option_c = "Rotorcraft"
-  question.option_d = "Military aircraft"
+question.save!
 
-  question.correct_option = "B"
-  question.explanation = "According to FAA right-of-way rules, gliders have priority over airplanes because they have limited ability to maneuver without engine power."
-  question.position = 2
-end
+question = right_of_way_card.questions.find_or_initialize_by(
+  question_text: "Which aircraft has the right-of-way when a glider and an airplane are converging?"
+)
 
-right_of_way_card.questions.find_or_create_by!(
-  question_text: "Which sequence correctly lists aircraft from highest to lowest right-of-way priority?"
-) do |question|
-  question.option_a = "Airplane, Rotorcraft, Airship, Glider, Balloon"
-  question.option_b = "Balloon, Glider, Airship, Airplane, Rotorcraft"
-  question.option_c = "Balloon, Airplane, Glider, Airship, Rotorcraft"
-  question.option_d = "Glider, Balloon, Airplane, Airship, Rotorcraft"
+question.assign_attributes(
+  option_a: "The airplane",
+  option_b: "The glider",
+  option_c: "The faster aircraft",
+  option_d: "The aircraft at the higher altitude",
+  correct_option: "B",
+  explanation: "A glider has the right-of-way over an airplane because it has less ability to maneuver or remain airborne without engine power.",
+  position: 2
+)
 
-  question.correct_option = "B"
-  question.explanation = "The correct priority order is Balloon, Glider, Airship, Airplane, and Rotorcraft. Remember that an aircraft in distress always takes priority over all others."
-  question.position = 3
-end
+question.save!
 
-right_of_way_card.questions.find_or_create_by!(
+question = right_of_way_card.questions.find_or_initialize_by(
+  question_text: "Which statement correctly describes right-of-way priority between different categories of aircraft?"
+)
+
+question.assign_attributes(
+  option_a: "Rotorcraft always have priority over airplanes",
+  option_b: "Airplanes always have priority over rotorcraft",
+  option_c: "Balloons have priority over all other categories, and gliders have priority over powered aircraft",
+  option_d: "The fastest aircraft always has priority",
+  correct_option: "C",
+  explanation: "Balloons have the right-of-way over every other category of aircraft. Gliders have priority over airships and powered aircraft. Airplanes and rotorcraft do not automatically have priority over one another.",
+  position: 3
+)
+
+question.save!
+
+question = right_of_way_card.questions.find_or_initialize_by(
+  question_text: "What special right-of-way priority does an aircraft towing or refueling another aircraft have?"
+)
+
+question.assign_attributes(
+  option_a: "It has priority only over rotorcraft",
+  option_b: "It has priority over all other engine-driven aircraft",
+  option_c: "It has priority over balloons and gliders",
+  option_d: "It has no special priority",
+  correct_option: "B",
+  explanation: "An aircraft towing or refueling another aircraft has the right-of-way over all other engine-driven aircraft.",
+  position: 4
+)
+
+question.save!
+
+question = right_of_way_card.questions.find_or_initialize_by(
   question_text: "When two aircraft of the same category are converging at approximately the same altitude, which aircraft has the right-of-way?"
-) do |question|
-  question.option_a = "The aircraft on the left"
-  question.option_b = "The faster aircraft"
-  question.option_c = "The aircraft on the right"
-  question.option_d = "The higher aircraft"
+)
 
-  question.correct_option = "C"
-  question.explanation = "When aircraft of the same category are converging, the aircraft on the right has the right-of-way. The pilot on the left must give way."
-  question.position = 4
-end
+question.assign_attributes(
+  option_a: "The aircraft on the left",
+  option_b: "The faster aircraft",
+  option_c: "The aircraft on the right",
+  option_d: "The higher aircraft",
+  correct_option: "C",
+  explanation: "When aircraft of the same category are converging at approximately the same altitude, the aircraft to the other's right has the right-of-way. The aircraft on the left must give way.",
+  position: 5
+)
 
-right_of_way_card.questions.find_or_create_by!(
-  question_text: "When two aircraft are approaching each other head-on, what should both pilots do?"
-) do |question|
-  question.option_a = "Turn left"
-  question.option_b = "Climb"
-  question.option_c = "Descend"
-  question.option_d = "Turn right"
+question.save!
 
-  question.correct_option = "D"
-  question.explanation = "When approaching head-on, both pilots should alter course to the right to reduce the risk of a collision."
-  question.position = 5
-end
+question = right_of_way_card.questions.find_or_initialize_by(
+  question_text: "When two aircraft are approaching each other head-on or nearly head-on, what should both pilots do?"
+)
 
-right_of_way_card.questions.find_or_create_by!(
+question.assign_attributes(
+  option_a: "Alter course to the left",
+  option_b: "Climb",
+  option_c: "Descend",
+  option_d: "Alter course to the right",
+  correct_option: "D",
+  explanation: "When aircraft are approaching head-on or nearly head-on, each pilot must alter course to the right.",
+  position: 6
+)
+
+question.save!
+
+question = right_of_way_card.questions.find_or_initialize_by(
   question_text: "Which aircraft must give way when one aircraft overtakes another?"
-) do |question|
-  question.option_a = "The aircraft being overtaken"
-  question.option_b = "The slower aircraft"
-  question.option_c = "The overtaking aircraft"
-  question.option_d = "The lower aircraft"
+)
 
-  question.correct_option = "C"
-  question.explanation = "The overtaking aircraft must alter course to the right and remain well clear of the aircraft being passed."
-  question.position = 6
-end
+question.assign_attributes(
+  option_a: "The aircraft being overtaken",
+  option_b: "The slower aircraft",
+  option_c: "The overtaking aircraft",
+  option_d: "The lower aircraft",
+  correct_option: "C",
+  explanation: "The aircraft being overtaken has the right-of-way. The overtaking aircraft must alter course to the right and pass well clear.",
+  position: 7
+)
 
-right_of_way_card.questions.find_or_create_by!(
-  question_text: "When giving way to another aircraft, which action should a pilot avoid?"
-) do |question|
-  question.option_a = "Turning away from the other aircraft"
-  question.option_b = "Adjusting speed or course"
-  question.option_c = "Passing over, under, or directly ahead of the other aircraft"
-  question.option_d = "Maintaining visual separation"
+question.save!
 
-  question.correct_option = "C"
-  question.explanation = "A pilot should never pass over, under, or directly ahead of another aircraft when giving way. Instead, make an early, safe maneuver to maintain adequate separation."
-  question.position = 7
-end
+question = right_of_way_card.questions.find_or_initialize_by(
+  question_text: "When giving way to another aircraft, which action must a pilot avoid?"
+)
 
-right_of_way_card.questions.find_or_create_by!(
-  question_text: "Which statement about aircraft on final approach is correct?"
-) do |question|
-  question.option_a = "The higher aircraft always has priority."
-  question.option_b = "The faster aircraft has priority."
-  question.option_c = "An aircraft established on final approach has the right-of-way, but should not cut in front of another aircraft already on final."
-  question.option_d = "Departing aircraft always have priority over landing aircraft."
+question.assign_attributes(
+  option_a: "Turning away from the other aircraft",
+  option_b: "Adjusting speed or course",
+  option_c: "Passing over, under, or ahead of the aircraft with the right-of-way",
+  option_d: "Maintaining visual separation",
+  correct_option: "C",
+  explanation: "The yielding aircraft must avoid passing over, under, or ahead of the aircraft with the right-of-way unless it will pass well clear.",
+  position: 8
+)
 
-  question.correct_option = "C"
-  question.explanation = "Aircraft established on final approach or landing have the right-of-way, but they should not use this rule to cut in front of another aircraft already established on final."
-  question.position = 8
-end
+question.save!
+
+question = right_of_way_card.questions.find_or_initialize_by(
+  question_text: "When two aircraft are approaching an airport to land, which aircraft normally has the right-of-way?"
+)
+
+question.assign_attributes(
+  option_a: "The aircraft at the higher altitude",
+  option_b: "The aircraft at the lower altitude",
+  option_c: "The faster aircraft",
+  option_d: "The aircraft closest to the control tower",
+  correct_option: "B",
+  explanation: "When two or more aircraft are approaching an airport to land, the aircraft at the lower altitude has the right-of-way. It may not cut in front of or overtake another aircraft already established on final approach.",
+  position: 9
+)
+
+question.save!
+
+question = right_of_way_card.questions.find_or_initialize_by(
+  question_text: "When an aircraft and another aircraft or vessel on the water are crossing, which has the right-of-way?"
+)
+
+question.assign_attributes(
+  option_a: "The aircraft",
+  option_b: "The vessel",
+  option_c: "The aircraft or vessel on the right",
+  option_d: "The faster aircraft or vessel",
+  correct_option: "C",
+  explanation: "When crossing on the water, the aircraft or vessel to the other's right has the right-of-way.",
+  position: 10
+)
+
+question.save!
