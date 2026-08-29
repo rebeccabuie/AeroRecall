@@ -16,3 +16,5 @@ load Rails.root.join("db/seeds/rules_and_regulations/accident_and_incident_repor
 load Rails.root.join("db/seeds/rules_and_regulations/aircraft_inspections_and_maintenance.rb")
 load Rails.root.join("db/seeds/rules_and_regulations/key_operating_rules.rb")
 load Rails.root.join("db/seeds/rules_and_regulations/aerobatic_and_parachute_rules.rb")
+load Rails.root.join("db/seeds/rules_and_regulations/svfr_oxygen_and_transponder.rb")
+load Rails.root.join("db/seeds/rules_and_regulations/fuel_requirements_and_vfr_cruising_altitudes.rb")
