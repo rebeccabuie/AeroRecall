@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get "users/new"
 
   get "users/create"
@@ -19,5 +18,4 @@ Rails.application.routes.draw do
   resources :questions, only: [] do
     post :check_answer, on: :member
   end
-
 end
