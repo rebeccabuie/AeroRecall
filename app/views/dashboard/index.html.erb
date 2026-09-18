@@ -1,0 +1,321 @@
+<div class="dashboard-page">
+
+  <%# ========================================
+      HERO / COURSE PROGRESS
+      ======================================== %>
+
+  <section class="dashboard-hero">
+    <div class="dashboard-shell">
+
+      <div class="dashboard-hero-content">
+        <div class="dashboard-hero-copy">
+          <p class="dashboard-kicker">Private Pilot Ground School</p>
+
+          <h1>
+            <% if authenticated? %>
+              Welcome back!
+            <% else %>
+              Welcome to AeroRecall
+            <% end %>
+          </h1>
+
+          <p class="dashboard-hero-subtitle">
+            Build your aviation knowledge one flight plan at a time.
+          </p>
+
+          <% if authenticated? %>
+            <div class="dashboard-hero-progress">
+              <div class="dashboard-progress-labels">
+                <span>Course Progress</span>
+                <strong><%= @overall_progress_percentage %>%</strong>
+              </div>
+
+              <div class="dashboard-progress-track">
+                <div
+                  class="dashboard-progress-fill"
+                  style="width: <%= @overall_progress_percentage %>%"
+                ></div>
+              </div>
+
+              <p>
+                <strong><%= @completed_cards_count %></strong>
+                of
+                <strong><%= @total_cards_count %></strong>
+                study cards completed
+              </p>
+            </div>
+          <% end %>
+        </div>
+
+        <% if authenticated? %>
+          <div class="dashboard-progress-badge">
+            <div class="dashboard-progress-number">
+              <%= @overall_progress_percentage %><span>%</span>
+            </div>
+
+            <p>Course<br>Complete</p>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </section>
+
+
+  <%# ========================================
+      TODAY'S FLIGHT PLAN
+      ======================================== %>
+
+  <% if authenticated? && @continue_deck.present? %>
+    <% progress = @deck_progress[@continue_deck.id] %>
+
+    <section class="dashboard-main-section">
+      <div class="dashboard-shell">
+
+        <div class="dashboard-section-title">
+          <p class="dashboard-kicker">Today's Flight Plan</p>
+          <h2>Continue Learning</h2>
+        </div>
+
+        <%= link_to study_deck_path(@continue_deck),
+                    class: "flight-plan-card" do %>
+
+          <div class="flight-plan-art">
+
+            <% continue_image =
+              case @continue_deck.name
+              when "Weather"
+                "weather-deck-cloud.png"
+              when "Rules & Regulations"
+                "rules-and-regs-deck.png"
+              else
+                "weather-deck-cloud.png"
+              end
+            %>
+
+            <%= image_tag continue_image,
+                          class: "flight-plan-image",
+                          alt: "" %>
+          </div>
+
+
+          <div class="flight-plan-content">
+
+            <p class="flight-plan-label">
+              Continue Studying
+            </p>
+
+            <h3><%= @continue_deck.name %></h3>
+
+            <p class="flight-plan-description">
+              <%= @continue_deck.description %>
+            </p>
+
+
+            <div class="flight-plan-progress">
+
+              <div class="dashboard-progress-labels">
+                <span>
+                  <%= progress[:completed_cards] %>
+                  of
+                  <%= progress[:total_cards] %>
+                  cards complete
+                </span>
+
+                <strong>
+                  <%= progress[:percentage] %>%
+                </strong>
+              </div>
+
+              <div class="dashboard-progress-track">
+                <div
+                  class="dashboard-progress-fill"
+                  style="width: <%= progress[:percentage] %>%"
+                ></div>
+              </div>
+
+            </div>
+
+
+            <span class="flight-plan-button">
+              Continue Learning
+              <span aria-hidden="true">→</span>
+            </span>
+
+          </div>
+
+        <% end %>
+
+      </div>
+    </section>
+  <% end %>
+
+
+  <%# ========================================
+      FUTURE STUDY TOOLS
+      ======================================== %>
+
+  <% if authenticated? %>
+    <section class="dashboard-tools-section">
+      <div class="dashboard-shell">
+
+        <div class="dashboard-tool-grid">
+
+          <div class="dashboard-tool-card">
+            <div class="dashboard-tool-icon" aria-hidden="true">
+              🧠
+            </div>
+
+            <div class="dashboard-tool-copy">
+              <div class="dashboard-tool-heading">
+                <p class="dashboard-kicker">Quick Review</p>
+                <span class="dashboard-coming-soon">Coming Soon</span>
+              </div>
+
+              <h3>Strengthen Your Memory</h3>
+
+              <p>
+                Review concepts at the right time to keep
+                important aviation knowledge fresh.
+              </p>
+            </div>
+          </div>
+
+
+          <div class="dashboard-tool-card">
+            <div class="dashboard-tool-icon" aria-hidden="true">
+              🎯
+            </div>
+
+            <div class="dashboard-tool-copy">
+              <div class="dashboard-tool-heading">
+                <p class="dashboard-kicker">Daily Goal</p>
+                <span class="dashboard-coming-soon">Coming Soon</span>
+              </div>
+
+              <h3>Build Your Study Habit</h3>
+
+              <p>
+                Small, consistent study sessions will help
+                turn ground school knowledge into long-term recall.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  <% end %>
+
+
+  <%# ========================================
+      GROUND SCHOOL SUBJECTS
+      ======================================== %>
+
+  <section class="dashboard-subjects-section">
+    <div class="dashboard-shell">
+
+      <div class="dashboard-subjects-heading">
+
+        <div>
+          <p class="dashboard-kicker">Ground School</p>
+          <h2>Your Subjects</h2>
+        </div>
+
+        <%= link_to "View all decks →",
+                    study_decks_path,
+                    class: "dashboard-view-all" %>
+
+      </div>
+
+
+      <div class="dashboard-subject-grid">
+
+        <% @study_decks.each do |deck| %>
+
+          <% deck_image =
+            case deck.name
+            when "Weather"
+              "weather-deck-cloud.png"
+            when "Rules & Regulations"
+              "rules-and-regs-deck.png"
+            else
+              "weather-deck-cloud.png"
+            end
+          %>
+
+
+          <%= link_to study_deck_path(deck),
+                      class: "dashboard-subject-card dashboard-subject-#{deck.name.parameterize}" do %>
+
+            <div class="dashboard-subject-image-wrap">
+              <%= image_tag deck_image,
+                            class: "dashboard-subject-image",
+                            alt: "" %>
+            </div>
+
+
+            <div class="dashboard-subject-content">
+
+              <p class="dashboard-subject-label">
+                Study Deck
+              </p>
+
+              <h3><%= deck.name %></h3>
+
+              <p class="dashboard-subject-description">
+                <%= deck.description %>
+              </p>
+
+
+              <% if authenticated? %>
+                <% progress = @deck_progress[deck.id] %>
+
+                <div class="dashboard-subject-progress">
+
+                  <div class="dashboard-progress-labels">
+                    <span>
+                      <%= progress[:completed_cards] %>
+                      of
+                      <%= progress[:total_cards] %>
+                    </span>
+
+                    <strong>
+                      <%= progress[:percentage] %>%
+                    </strong>
+                  </div>
+
+                  <div class="dashboard-progress-track">
+                    <div
+                      class="dashboard-progress-fill"
+                      style="width: <%= progress[:percentage] %>%"
+                    ></div>
+                  </div>
+
+                </div>
+              <% end %>
+
+
+              <span class="dashboard-subject-link">
+                <% if authenticated? && progress[:percentage] > 0 %>
+                  Continue
+                <% else %>
+                  Start Learning
+                <% end %>
+
+                <span aria-hidden="true">→</span>
+              </span>
+
+            </div>
+
+          <% end %>
+
+        <% end %>
+
+      </div>
+
+    </div>
+  </section>
+
+</div>
