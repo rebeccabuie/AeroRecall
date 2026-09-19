@@ -19,3 +19,8 @@ load Rails.root.join("db/seeds/rules_and_regulations/aerobatic_and_parachute_rul
 load Rails.root.join("db/seeds/rules_and_regulations/svfr_oxygen_and_transponder.rb")
 load Rails.root.join("db/seeds/rules_and_regulations/fuel_requirements_and_vfr_cruising_altitudes.rb")
 load Rails.root.join("db/seeds/rules_and_regulations/required_equipment_and_inoperative_equipment.rb")
+load Rails.root.join("db/seeds/rules_and_regulations/required_documents_and_preflight_planning.rb")
+load Rails.root.join("db/seeds/rules_and_regulations/special_use_airspace.rb")
+load Rails.root.join("db/seeds/rules_and_regulations/operations_in_class_b_airspace.rb")
+load Rails.root.join("db/seeds/rules_and_regulations/pic_responsibility_and_authority.rb")
+load Rails.root.join("db/seeds/rules_and_regulations/atc_clearances.rb")
