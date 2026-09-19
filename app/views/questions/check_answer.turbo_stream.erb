@@ -16,43 +16,63 @@
   <p><%= @question.explanation %></p>
 <% end %>
 
-<% if @correct %>
-  <%= turbo_stream.append "score" do %>
-    <script>
-      var currentScore = document.getElementById("current_score");
-      var totalQuestions = document.getElementById("total_questions");
-      var scoreDisplay = document.getElementById("score");
+<%= turbo_stream.remove "question_#{@question.id}_form" %>
 
-      currentScore.value = parseInt(currentScore.value) + 1;
-      var percentage = Math.round((currentScore.value / totalQuestions.value) * 100);
+<% if authenticated? %>
+  <%= turbo_stream.update "score" do %>
+    <div>
+      Score:
+      <%= @card_completed ? @correct_answers : Current.user.question_attempts.where(question: @study_card.questions, correct: true).count %>
+      /
+      <%= @total_questions %>
+      <br>
 
-      scoreDisplay.innerText =
-        "Score: " +
-        currentScore.value +
-        " / " +
-        totalQuestions.value +
-        " (" +
-        percentage +
-        "%)";
-
-      if (document.querySelectorAll('form[id$="_form"]').length === 1) {
-        var nextCardUrl = document.getElementById("next_card_url");
-        var nextCardTitle = document.getElementById("next_card_title");
-
-        if (nextCardUrl && nextCardTitle) {
-          document.getElementById("completion_message").innerHTML =
-            "🎉 Deck Complete!<br><a href='" +
-            nextCardUrl.value +
-            "'>Next Card: " +
-            nextCardTitle.value +
-            " →</a>";
-        } else {
-          document.getElementById("completion_message").innerHTML =
-            "🎉 Deck Complete!";
-        }
-      }
-    </script>
+      Answered:
+      <%= @questions_answered %>
+      /
+      <%= @total_questions %>
+    </div>
   <% end %>
 <% end %>
 
-<%= turbo_stream.remove "question_#{@question.id}_form" %>
+<% if @card_completed %>
+  <%= turbo_stream.update "completion_message" do %>
+    <div class="quiz-results">
+      <h2>Quiz Complete!</h2>
+
+      <p class="quiz-results-score">
+        <strong>
+          <%= @correct_answers %> / <%= @total_questions %>
+          — <%= @score_percentage %>%
+        </strong>
+      </p>
+
+      <% if @missed_count.zero? %>
+        <p>Perfect score! 🎉</p>
+
+      <% elsif @score_percentage >= 80 %>
+        <p>Nice work! You passed this card. 🎉</p>
+
+        <p>
+          You missed <%= pluralize(@missed_count, "question") %>.
+          Review them to lock it in.
+        </p>
+
+      <% else %>
+        <p>
+          You missed <%= pluralize(@missed_count, "question") %>.
+          Let's review those before moving on.
+        </p>
+      <% end %>
+
+      <% if @missed_count.positive? %>
+        <%= link_to "Review #{pluralize(@missed_count, "Missed Question")}",
+                    review_path(
+                      mode: "missed",
+                      study_card_id: @study_card.id
+                    ),
+                    class: "study-nav-button study-nav-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

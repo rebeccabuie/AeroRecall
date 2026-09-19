@@ -1,0 +1,83 @@
+<div class="lesson-player">
+  <div class="lesson-player__header">
+    <p class="lesson-player__eyebrow">
+      <%= @study_card.title %>
+    </p>
+
+    <p class="lesson-player__progress">
+      Missed Question Review
+    </p>
+  </div>
+
+  <div class="lesson-player__card">
+    <div class="lesson-player__question">
+      <p class="lesson-player__question-label">
+        Check Your Recall
+      </p>
+
+      <h1><%= @question.question_text %></h1>
+
+      <% if @answered %>
+        <div class="lesson-player__result">
+          <% if @correct %>
+            <h2>Correct! 🎉</h2>
+          <% else %>
+            <h2>Not quite</h2>
+
+            <p>
+              The correct answer is
+              <strong>
+                <%= @question.correct_option %>.
+                <%= @question.public_send(
+                      "option_#{@question.correct_option.downcase}"
+                    ) %>
+              </strong>
+            </p>
+          <% end %>
+
+          <% if @question.explanation.present? %>
+            <div class="lesson-player__body">
+              <%= simple_format(@question.explanation) %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <%= form_with url: answer_review_path(@question),
+                      method: :post,
+                      class: "lesson-player__answer-form",
+                      data: { turbo: false } do |form| %>
+
+          <% %w[A B C D].each do |option| %>
+            <label class="lesson-player__answer">
+              <%= form.radio_button :answer,
+                                    option,
+                                    required: true %>
+
+              <span>
+                <strong><%= option %>.</strong>
+                <%= @question.public_send("option_#{option.downcase}") %>
+              </span>
+            </label>
+          <% end %>
+
+          <%= form.submit "Check Answer",
+                          class: "study-nav-button study-nav-primary" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="lesson-player__navigation">
+    <% if @answered %>
+      <% if @remaining_count > 0 %>
+        <%= link_to "Next Question →",
+                    review_path,
+                    class: "study-nav-button study-nav-primary" %>
+      <% else %>
+        <%= link_to "Finish Review",
+                    reviews_path,
+                    class: "study-nav-button study-nav-primary" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

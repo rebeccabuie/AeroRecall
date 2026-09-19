@@ -1,47 +1,52 @@
 <section class="study-card-page">
   <header class="deck-hero deck-<%= @study_card.study_deck.name.parameterize %> study-card-hero">
-    <div class="deck-hero-inner">  
+    <div class="deck-hero-inner">
       <div class="deck-hero-left">
-          <% deck_image =
-            case @study_card.study_deck.name
-            when "Weather"
-              "weather-deck-cloud.png"
-            when "Rules & Regulations"
-              "rules-and-regs-deck.png"
-            else
-              "weather-deck-cloud.png"
-            end
-          %>
+        <% deck_image =
+          case @study_card.study_deck.name
+          when "Weather"
+            "weather-deck-cloud.png"
+          when "Rules & Regulations"
+            "rules-and-regs-deck.png"
+          else
+            "weather-deck-cloud.png"
+          end
+        %>
 
-          <%= image_tag deck_image,
-                        class: "deck-hero-image",
-                        alt: "#{@study_card.study_deck.name} icon" %>
-          <div>
-            <p class="deck-hero-eyebrow"><%= @study_card.study_deck.name %> Deck</p>
-            <h1><%= @study_card.title %></h1>
-            <p><%= @study_card.description %></p>
-          </div>
-        </div>
+        <%= image_tag deck_image,
+                      class: "deck-hero-image",
+                      alt: "#{@study_card.study_deck.name} icon" %>
 
-        <div class="deck-hero-actions">
-          <span class="study-hero-card-count">
-            Card <%= @card_number %> of <%= @total_cards %>
-          </span>
+        <div>
+          <p class="deck-hero-eyebrow">
+            <%= @study_card.study_deck.name %> Deck
+          </p>
 
-          <% if authenticated? && @study_card_progress&.completed? %>
-            <span class="study-hero-status">Completed</span>
-          <% end %>
-
-          <%= link_to "← Back to #{@study_card.study_deck.name}",
-                study_deck_path(@study_card.study_deck),
-                class: "deck-hero-link" %>
+          <h1><%= @study_card.title %></h1>
+          <p><%= @study_card.description %></p>
         </div>
       </div>
+
+      <div class="deck-hero-actions">
+        <span class="study-hero-card-count">
+          Card <%= @card_number %> of <%= @total_cards %>
+        </span>
+
+        <% if authenticated? && @study_card_progress&.completed? %>
+          <span class="study-hero-status">Completed</span>
+        <% end %>
+
+        <%= link_to "← Back to #{@study_card.study_deck.name}",
+                    study_deck_path(@study_card.study_deck),
+                    class: "deck-hero-link" %>
+      </div>
+    </div>
   </header>
 
   <% if @study_card.infographic.attached? %>
     <div class="infographic-frame">
-      <%= image_tag @study_card.infographic, class: "infographic-image" %>
+      <%= image_tag @study_card.infographic,
+                    class: "infographic-image" %>
     </div>
   <% end %>
 
@@ -54,24 +59,82 @@
 
       <div id="score" class="score-card">
         <% if authenticated? && @study_card_progress %>
-          Score: <%= @study_card_progress.correct_answers %> / <%= @study_card.questions.count %><br>
-          Answered: <%= @study_card_progress.questions_answered %> / <%= @study_card.questions.count %>
+          Score:
+          <%= @study_card_progress.correct_answers %>
+          /
+          <%= @study_card.questions.count %>
+          <br>
+
+          Answered:
+          <%= @study_card_progress.questions_answered %>
+          /
+          <%= @study_card.questions.count %>
         <% else %>
-          Score: 0 / <%= @study_card.questions.count %><br>
+          Score: 0 / <%= @study_card.questions.count %>
+          <br>
           Answered: 0 / <%= @study_card.questions.count %>
         <% end %>
       </div>
     </div>
 
-    <p id="completion_message" class="completion-message"></p>
+    <div id="completion_message" class="completion-message">
+      <% if authenticated? && @card_completed %>
+        <div class="quiz-results">
+          <h2>Quiz Complete!</h2>
 
-    <input type="hidden" id="current_score" value="<%= authenticated? && @study_card_progress ? @study_card_progress.correct_answers : 0 %>">
+          <p class="quiz-results-score">
+            <strong>
+              <%= @correct_answers %> / <%= @total_questions %>
+              — <%= @score_percentage %>%
+            </strong>
+          </p>
 
-    <input type="hidden" id="total_questions" value="<%= @study_card.questions.count %>">
+          <% if @missed_count.zero? %>
+            <p>Perfect score! 🎉</p>
+
+          <% elsif @score_percentage >= 80 %>
+            <p>Nice work! You passed this card. 🎉</p>
+
+            <p>
+              You missed <%= pluralize(@missed_count, "question") %>.
+              Review them to lock it in.
+            </p>
+
+          <% else %>
+            <p>
+              You missed <%= pluralize(@missed_count, "question") %>.
+              Let's review those before moving on.
+            </p>
+          <% end %>
+
+          <% if @missed_count.positive? %>
+            <%= link_to "Review #{pluralize(@missed_count, "Missed Question")}",
+            review_path(
+              mode: "missed",
+              study_card_id: @study_card.id
+            ),
+            class: "study-nav-button study-nav-primary" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <input type="hidden"
+           id="current_score"
+           value="<%= authenticated? && @study_card_progress ? @study_card_progress.correct_answers : 0 %>">
+
+    <input type="hidden"
+           id="total_questions"
+           value="<%= @study_card.questions.count %>">
 
     <% if @next_card %>
-      <input type="hidden" id="next_card_url" value="<%= study_card_path(@next_card) %>">
-      <input type="hidden" id="next_card_title" value="<%= @next_card.title %>">
+      <input type="hidden"
+             id="next_card_url"
+             value="<%= study_card_path(@next_card) %>">
+
+      <input type="hidden"
+             id="next_card_title"
+             value="<%= @next_card.title %>">
     <% end %>
 
     <ol class="question-list">
@@ -81,83 +144,112 @@
         <li class="question-card">
           <h3><%= question.question_text %></h3>
 
-          <%= form_with url: check_answer_question_path(question), method: :post, id: "question_#{question.id}_form", data: { correct_answer: question.correct_option }, class: "answer-form" do %>
+          <%= form_with url: check_answer_question_path(question),
+                        method: :post,
+                        id: "question_#{question.id}_form",
+                        data: {
+                          correct_answer: question.correct_option
+                        },
+                        class: "answer-form" do %>
+
             <label>
-              <%= radio_button_tag :answer, "A", attempt&.selected_answer == "A", disabled: attempt.present? %>
+              <%= radio_button_tag :answer,
+                                   "A",
+                                   attempt&.selected_answer == "A",
+                                   disabled: attempt.present? %>
+
               <span><%= question.option_a %></span>
             </label>
 
             <label>
-              <%= radio_button_tag :answer, "B", attempt&.selected_answer == "B", disabled: attempt.present? %>
+              <%= radio_button_tag :answer,
+                                   "B",
+                                   attempt&.selected_answer == "B",
+                                   disabled: attempt.present? %>
+
               <span><%= question.option_b %></span>
             </label>
 
             <label>
-              <%= radio_button_tag :answer, "C", attempt&.selected_answer == "C", disabled: attempt.present? %>
+              <%= radio_button_tag :answer,
+                                   "C",
+                                   attempt&.selected_answer == "C",
+                                   disabled: attempt.present? %>
+
               <span><%= question.option_c %></span>
             </label>
 
             <label>
-              <%= radio_button_tag :answer, "D", attempt&.selected_answer == "D", disabled: attempt.present? %>
+              <%= radio_button_tag :answer,
+                                   "D",
+                                   attempt&.selected_answer == "D",
+                                   disabled: attempt.present? %>
+
               <span><%= question.option_d %></span>
             </label>
 
-            <%= submit_tag "Check Answer", class: "button", disabled: attempt.present? %>
+            <%= submit_tag "Check Answer",
+                           class: "button",
+                           disabled: attempt.present? %>
           <% end %>
 
-        <div id="question_<%= question.id %>_result" class="answer-result">
-          <% if attempt.present? %>
-            <% if attempt.correct? %>
-              <p>Correct! ✅</p>
-            <% else %>
-              <p>Not quite.</p>
+          <div id="question_<%= question.id %>_result"
+               class="answer-result">
+
+            <% if attempt.present? %>
+              <% if attempt.correct? %>
+                <p>Correct! ✅</p>
+              <% else %>
+                <p>Not quite.</p>
+              <% end %>
+
+              <p>
+                Correct answer:
+                <strong>
+                  <%= question.correct_option %>.
+                  <%= question.public_send(
+                        "option_#{question.correct_option.downcase}"
+                      ) %>
+                </strong>
+              </p>
+
+              <p><%= question.explanation %></p>
             <% end %>
-
-            <p>
-              Correct answer:
-              <strong>
-                <%= question.correct_option %>.
-                <%= question.public_send("option_#{question.correct_option.downcase}") %>
-              </strong>
-            </p>
-
-            <p><%= question.explanation %></p>
-          <% end %>
-        </div>   
-      </li>
+          </div>
+        </li>
       <% end %>
     </ol>
   </section>
 
-<div class="study-card-navigation">
-  <nav class="study-card-navigation-inner">
+  <div class="study-card-navigation">
+    <nav class="study-card-navigation-inner">
 
-    <div class="study-nav-side">
-      <% if @previous_card %>
-        <%= link_to "← Previous Lesson",
-                    study_card_path(@previous_card),
-                    class: "study-nav-button study-nav-secondary" %>
-      <% end %>
-    </div>
+      <div class="study-nav-side">
+        <% if @previous_card %>
+          <%= link_to "← Previous Lesson",
+                      study_card_path(@previous_card),
+                      class: "study-nav-button study-nav-secondary" %>
+        <% end %>
+      </div>
 
-    <div class="study-nav-center">
-      <%= link_to "Back to Deck",
-                  study_deck_path(@study_card.study_deck),
-                  class: "study-nav-button study-nav-deck" %>
-    </div>
-
-    <div class="study-nav-side study-nav-side-right">
-      <% if @next_card %>
-        <%= link_to "Next Lesson →",
-                    study_card_path(@next_card),
-                    class: "study-nav-button study-nav-primary" %>
-      <% else %>
-        <%= link_to "View Deck Progress",
+      <div class="study-nav-center">
+        <%= link_to "Back to Deck",
                     study_deck_path(@study_card.study_deck),
-                    class: "study-nav-button study-nav-primary" %>
-      <% end %>
-    </div>
+                    class: "study-nav-button study-nav-deck" %>
+      </div>
 
-  </nav>
-</div>
+      <div class="study-nav-side study-nav-side-right">
+        <% if @next_card %>
+          <%= link_to "Next Lesson →",
+                      study_card_path(@next_card),
+                      class: "study-nav-button study-nav-primary" %>
+        <% else %>
+          <%= link_to "View Deck Progress",
+                      study_deck_path(@study_card.study_deck),
+                      class: "study-nav-button study-nav-primary" %>
+        <% end %>
+      </div>
+
+    </nav>
+  </div>
 </section>

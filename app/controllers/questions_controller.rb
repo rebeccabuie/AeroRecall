@@ -7,6 +7,7 @@ class QuestionsController < ApplicationController
     @correct = @selected_answer == @question.correct_option
 
     update_question_attempt_and_progress if authenticated?
+    load_completion_results if authenticated?
 
     respond_to do |format|
       format.turbo_stream
@@ -17,7 +18,9 @@ class QuestionsController < ApplicationController
   private
 
   def update_question_attempt_and_progress
-    attempt = Current.user.question_attempts.find_or_initialize_by(question: @question)
+    attempt = Current.user.question_attempts.find_or_initialize_by(
+      question: @question
+    )
 
     return unless attempt.new_record?
 
@@ -30,7 +33,9 @@ class QuestionsController < ApplicationController
       study_card: @study_card
     )
 
-    attempts = Current.user.question_attempts.where(question: @study_card.questions)
+    attempts = Current.user.question_attempts.where(
+      question: @study_card.questions
+    )
 
     questions_answered = attempts.count
     correct_answers = attempts.where(correct: true).count
@@ -43,5 +48,28 @@ class QuestionsController < ApplicationController
       completed_at: card_completed ? Time.current : nil,
       last_studied_at: Time.current
     )
+  end
+
+  def load_completion_results
+    attempts = Current.user.question_attempts.where(
+      question: @study_card.questions
+    )
+
+    @questions_answered = attempts.count
+    @total_questions = @study_card.questions.count
+    @card_completed = @questions_answered >= @total_questions
+
+    return unless @card_completed
+
+    @correct_answers = attempts.where(correct: true).count
+    @missed_attempts = attempts.where(correct: false)
+    @missed_count = @missed_attempts.count
+
+    @score_percentage =
+      if @total_questions.zero?
+        0
+      else
+        ((@correct_answers.to_f / @total_questions) * 100).round
+      end
   end
 end

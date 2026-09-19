@@ -1,0 +1,52 @@
+<div class="lesson-player">
+  <div class="lesson-player__header">
+    <p class="lesson-player__eyebrow">
+      Review
+    </p>
+
+    <p class="lesson-player__progress">
+      Complete
+    </p>
+  </div>
+
+  <div class="lesson-player__card">
+    <div class="lesson-player__celebration">
+      <p class="lesson-player__celebration-eyebrow">
+        Review Complete
+      </p>
+
+      <h1>Nice work! 🎉</h1>
+
+      <div class="lesson-player__body">
+        <p>
+          You finished reviewing the questions you missed.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-player__navigation">
+    <% if session[:review_study_card_id].present? %>
+      <%= link_to "Back to Lesson",
+                  study_card_path(session[:review_study_card_id]),
+                  class: "lesson-player__button" %>
+    <% else %>
+      <%= link_to "Back to Dashboard",
+                  root_path,
+                  class: "lesson-player__button" %>
+    <% end %>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"
+  onload="
+    confetti({
+      particleCount: 160,
+      spread: 100,
+      origin: { y: 0.6 }
+    });
+  ">
+</script>

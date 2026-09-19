@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get "users/new"
-
   get "users/create"
 
   resource :session
@@ -18,4 +17,10 @@ Rails.application.routes.draw do
   resources :questions, only: [] do
     post :check_answer, on: :member
   end
+
+  resources :reviews, only: [ :index ]
+
+  get "review", to: "reviews#show", as: :review
+
+  post "review/:id/answer", to: "reviews#answer", as: :answer_review
 end
