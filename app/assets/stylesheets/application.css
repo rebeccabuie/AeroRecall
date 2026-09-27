@@ -124,8 +124,7 @@ body {
 }
 
 .home-deck-grid {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
-  justify-content: start;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .home-deck-card {
@@ -173,6 +172,11 @@ body {
 
 .deck-rules-regulations {
   background: #f15a24;
+}
+
+.deck-card.deck-navigation,
+.deck-hero.deck-navigation {
+  background: #541a9f;
 }
 
 .deck-page-back-button {
