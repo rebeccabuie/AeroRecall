@@ -5,3 +5,11 @@ end
 load Rails.root.join(
   "db/seeds/navigation/chart_symbols_airport_data.rb"
 )
+
+load Rails.root.join(
+  "db/seeds/navigation/chart_symbols_airspace_boundaries.rb"
+)
+
+load Rails.root.join(
+  "db/seeds/navigation/chart_symbols_airports_navaids_obstacles.rb"
+)

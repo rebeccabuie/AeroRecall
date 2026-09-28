@@ -1285,6 +1285,10 @@ body {
   background: #e7f6fd;
 }
 
+.dashboard-subject-navigation .dashboard-subject-image-wrap {
+  background: #f0e7fa;
+}
+
 .dashboard-subject-rules-regulations .dashboard-subject-image-wrap {
   background: #fff0e9;
 }
